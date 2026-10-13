@@ -1,0 +1,25 @@
+## D1 — relatório do mês (2026-08-01 a 2026-08-31) pela borda
+início 22:20:02 UTC
+$ post /reports/topics '{"start": "2026-08-01", "end": "2026-08-31"}'
+HTTP 504  ttfb=30.042523s  total=30.044127s
+corpo: <html>
+<head><title>504 Gateway Time-out</title></head>
+<body>
+<center><h1>504 Gateway Time-out</h1></center>
+<hr><center>nginx/1.27.5</center>
+</body>
+</html>
+
+## /admin/calls logo após o 504
+4 chamadas topics recebidas (3 concluídas), 26631 tokens de entrada, 1083 de saída
+## +1 min após o 504: 10 chamadas topics recebidas (9 concluídas), 66551 tokens de entrada, 3214 de saída
+## +2 min após o 504: 16 chamadas topics recebidas (15 concluídas), 106566 tokens de entrada, 5372 de saída
+## +3 min após o 504: 22 chamadas topics recebidas (21 concluídas), 146592 tokens de entrada, 7529 de saída
+## +4 min após o 504: 28 chamadas topics recebidas (27 concluídas), 186571 tokens de entrada, 9689 de saída
+## +5 min após o 504: 34 chamadas topics recebidas (33 concluídas), 222114 tokens de entrada, 11847 de saída
+## +6 min após o 504: 34 chamadas topics recebidas (34 concluídas), 222114 tokens de entrada, 12162 de saída
+## /admin/calls final (últimas 3)
+3 chamada(s) em /admin/calls (mais recente primeiro)
+  22:25:25 anthropic claude-fake-large topics   stream=False status=200 in=2225 out=315 ms=8678
+  22:25:15 anthropic claude-fake-large topics   stream=False status=200 in=6627 out=361 ms=9828
+  22:25:05 anthropic claude-fake-large topics   stream=False status=200 in=6648 out=361 ms=9832

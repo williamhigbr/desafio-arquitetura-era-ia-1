@@ -89,7 +89,9 @@ Objetivo: transformar as 4 dores em fatos com comando, resultado e causa no cód
 
 Agente: peça um `scripts/diagnose.sh` que execute os cenários e salve saídas em texto. Você interpreta e escreve o README.
 
-Pronto quando: as 4 dores têm comando, resultado (status, tempo, trechos de `/admin/calls`) e arquivo/linha da causa. `git status app/` limpo.
+Pronto quando: as 4 dores têm comando, resultado (status, tempos e trechos de `/admin/calls`) e arquivo/linha da causa. `git status app/` limpo.
+
+Status: concluída em 2026-10-13. A seção "Diagnóstico da v1" do `README.md` está escrita; as saídas brutas ficam em `docs/evidence/diagnostico/`, geradas por `scripts/diagnose.sh`. Números-chave: D1 deu 504 em 30 s, e os 34 lotes continuaram por ~5,5 min depois disso (222k tokens, ≈ US$ 0,85 desperdiçados). D2: primeiro byte = total = 16 s. D3: com error_500, 3 tentativas no mesmo provider e `500`; com timeout, 504 na borda e segunda tentativa do SDK 300 s depois. D4: `restart` não troca o modelo, só o rebuild (~12 s) troca.
 
 <details><summary>P3. Por que o 504 da borda não interrompe o trabalho da app?</summary>
 

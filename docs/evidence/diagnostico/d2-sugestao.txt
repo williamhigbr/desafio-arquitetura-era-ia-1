@@ -1,0 +1,6 @@
+## D2 — sugestão de resposta pela borda (curl -N, mede primeiro byte e total)
+$ curl -sN -o /dev/null -w 'HTTP %{http_code}  ttfb=%{time_starttransfer}s  total=%{time_total}s  bytes=%{size_download}  content-type=%{content_type}\n' -X POST http://localhost:8000/tickets/reply-suggestion -H 'Content-Type: application/json' -d '{"ticket_id": "TK-00042", "text": "Meu pedido #481516 não chegou e já passou do prazo, urgente"}'
+HTTP 200  ttfb=15.980447s  total=15.980667s  bytes=2606  content-type=application/json
+
+1 chamada(s) em /admin/calls (mais recente primeiro)
+  22:07:33 anthropic claude-fake-large suggest  stream=False status=200 in=19 out=606 ms=15951
