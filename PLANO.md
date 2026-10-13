@@ -58,6 +58,8 @@ Agente: peça um script `scripts/compare_models.sh` que chame cada tarefa nos 4 
 
 Pronto quando: você sabe dizer, por tarefa, se `mini` difere de `large` e como.
 
+Status: concluída em 2026-10-13. Evidências em [`docs/evidence/etapa1-reconhecimento.md`](docs/evidence/etapa1-reconhecimento.md), com os dados brutos em `docs/evidence/model-comparison.json` (gerados por `python3 scripts/compare_models.py`). Resumo: `classify` e `topics` dão a mesma saída no `mini`; `suggest` sai ~45% do tamanho, com o mesmo conteúdo; `extract` no `mini` devolve a nota fiscal no lugar do pedido e perde o produto. SDKs: 600 s de timeout de leitura e 2 retries (openai 3.19.0, anthropic 1.8.0).
+
 <details><summary>P1. Em quais tarefas o <code>mini</code> é pior, e isso importa para quem?</summary>
 
 Confirme com as chamadas (a evidência do ADR tem que ser a saída observada):
