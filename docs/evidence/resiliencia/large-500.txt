@@ -1,18 +1,18 @@
 ## large-500: os dois modelos large em error_500 (mini em normal)
 modos: [{"provider": "openai", "model": "gpt-fake-large", "mode": "error_500"}, {"provider": "anthropic", "model": "claude-fake-large", "mode": "error_500"}]
 ### F1 /tickets/classification
-  HTTP 200 em 5.45 s pela borda: {"category": "product_defect", "priority": "low"}
+  HTTP 200 em 4.79 s pela borda: {"category": "product_defect", "priority": "low"}
   tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 2, 'gpt-fake-mini': 1}
   sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:500 → claude-fake-large:500 → gpt-fake-mini:200
 ### F4 /tickets/extraction
-  HTTP 503 em 4.54 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}
+  HTTP 503 em 4.91 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}
   tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 2}
   sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:500 → claude-fake-large:500
 ### F2 /tickets/reply-suggestion
-  HTTP 200 em 7.86 s pela borda: suggestion com 1096 caracteres
+  HTTP 200 em 7.13 s pela borda: stream com 274 trechos (1096 caracteres), fim: event: end
   tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 2, 'claude-fake-mini': 1}
   sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-mini:200
 ### F3 /reports/topics
-  HTTP 200 em 7.92 s pela borda: total_tickets=137, 15 temas
+  HTTP 200 em 7.12 s pela borda: 202 → 303 → total_tickets=137, 15 temas
   tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 2, 'claude-fake-mini': 1}
   sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-mini:200

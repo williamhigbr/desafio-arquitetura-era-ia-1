@@ -1,0 +1,11 @@
+component,ca,ce,i,a,d
+adapters.gateway,1,1,0.5,0,0.5
+adapters.memory_jobs,1,1,0.5,0,0.5
+adapters.tickets_file,1,1,0.5,0,0.5
+classification,1,2,0.67,0,0.33
+extraction,1,2,0.67,0,0.33
+main,0,8,1,0,0
+ports,7,0,0,1,0
+report,1,2,0.67,0,0.33
+schemas,5,0,0,0,1
+suggestion,1,2,0.67,0,0.33

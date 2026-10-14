@@ -1,6 +1,6 @@
 ## rate-limit-f1: openai inteiro em error_429 (Retry-After: 2)
 modos: [{"provider": "openai", "mode": "error_429"}]
 ### F1 /tickets/classification
-  HTTP 200 em 7.78 s pela borda: {"category": "product_defect", "priority": "low"}
+  HTTP 200 em 8.65 s pela borda: {"category": "product_defect", "priority": "low"}
   tentativas por destino: {'gpt-fake-large': 3, 'claude-fake-large': 1}
   sequência em /admin/calls: gpt-fake-large:429 → gpt-fake-large:429 → gpt-fake-large:429 → claude-fake-large:200

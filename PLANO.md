@@ -285,6 +285,8 @@ Tarefas
 - Testes da `main` para os contratos novos (pode atualizar `tests/characterization/` na `main` ou criar `tests/contract/`). Um script de aceite que percorre os critérios ajuda na Etapa 10.
 - Medir `main`, versionar CSV/PNG; conferir zona de dor e que só `main.py` importa o adapter.
 
+Status: concluída em 2026-10-13. F2 em SSE (1º trecho em ~0,9 s, `event: end`/`error`). F3 com `202` → status → `303`, 4 lotes em paralelo, mês em ~88 s, `failed` com motivo em ~6 s. Suíte `tests/contract/` (17 testes). `metrics/results/main.csv` tem só `schemas` na zona de dor.
+
 <details><summary>P14. Streaming na F2 resolve "não dar 504"? E por que não usar streaming na F3?</summary>
 
 Na F2 sim, por consequência: bytes chegam a cada fração de segundo, então a borda nunca fica 30 s sem dados. Mas o motivo da escolha é outro: o atendente consome o texto aos poucos. Na F3 streaming só esconderia o problema (conexão aberta por minutos, painel sem ninguém olhando, resultado útil só no fim). Se o ADR justificar F3 com "evita o 504", ele está justificando por acidente; a justificativa é "ninguém está esperando e o trabalho não cabe no orçamento de latência".
@@ -321,6 +323,8 @@ ADRs mínimos sugeridos (`docs/adr/`, linha `Nível:` em cada):
 README com todas as seções do Entregável: Visão geral, Diagnóstico da v1, Como rodar, Métrica, Tabela de capacidades, Tabela de fallback, Fluxos (com `curl`), Troca de modelo, Roteiro de governança, Mapa de decisões. Identifique explicitamente o componente que chama o gateway.
 
 Regra: cada afirmação de ADR tem uma seção "Evidência" com um comando que a prova. Se não dá para provar pela borda ou pelo `/admin/calls`, o ADR ou o código está errado.
+
+Status: concluída em 2026-10-13. ADRs 0001–0009 em `docs/adr/` (1 corporativa, 5 de solução, 3 de software), cada um com uma seção "Evidência". README com as 10 seções.
 
 <details><summary>P17. Como decidir o nível de um ADR?</summary>
 

@@ -1,10 +1,10 @@
 ## openai-500: openai inteiro em error_500 (primário de F1/F4)
 modos: [{"provider": "openai", "mode": "error_500"}]
 ### F1 /tickets/classification
-  HTTP 200 em 3.41 s pela borda: {"category": "product_defect", "priority": "low"}
+  HTTP 200 em 3.91 s pela borda: {"category": "product_defect", "priority": "low"}
   tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 1}
   sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:200
 ### F4 /tickets/extraction
-  HTTP 200 em 3.27 s pela borda: {"order_number": "#389511", "product": "tapete de yoga"}
+  HTTP 200 em 4.00 s pela borda: {"order_number": "#389511", "product": "tapete de yoga"}
   tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 1}
   sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:200

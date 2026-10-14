@@ -1,0 +1,6 @@
+## timeout-f2: primário da F2 (claude-fake-large) em timeout
+modos: [{"provider": "anthropic", "model": "claude-fake-large", "mode": "timeout"}]
+### F2 /tickets/reply-suggestion
+  HTTP 200 em 22.01 s pela borda: stream com 613 trechos (2451 caracteres), fim: event: end
+  tentativas por destino: {'claude-fake-large': 1, 'gpt-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:504 → gpt-fake-large:200

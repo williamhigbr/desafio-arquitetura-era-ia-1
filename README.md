@@ -4,7 +4,15 @@ Entrega do desafio [Da integração frágil à arquitetura resiliente](https://g
 
 ## Visão geral
 
-_A preencher ao final (Etapa 9)._
+O helpdesk usa IA em quatro features e chama os modelos só pelo AI Gateway (LiteLLM, serviço `gateway`). A app pede capacidades lógicas (`ticket-classify`, `ticket-extract`, `ticket-reply`, `topics-report`) com uma chave do próprio gateway, e não conhece modelo físico, provider nem credencial. O código que fala com o gateway fica num único componente, [`app/helpdesk/adapters/gateway.py`](app/helpdesk/adapters/gateway.py), que só o ponto de composição (`main.py`) importa. Cada feature roda no modo que o contrato dela pede:
+
+- F1 classificação e F4 extração: síncronas, com timeout;
+- F2 sugestão: streaming SSE, com o primeiro trecho em ~0,9 s;
+- F3 relatório do mês: assíncrona, com `202` e polling, e o relatório pronto em ~1,5 min.
+
+Trocar o modelo de uma capacidade é editar `gateway/config.yaml` e reiniciar só o gateway. Orçamento e limite de requisições por chave são recusados no gateway, antes do provider.
+
+Quando um provider cai, a feature continua respondendo pelo modelo equivalente do outro provider. O gateway faz 1 retry com backoff no primário (`5xx`) e então troca de destino, de forma transparente para o cliente. Se os dois modelos `large` caírem, F1, F2 e F3 respondem com o `mini` (degradação declarada), e a F4, que alimenta uma automação sem revisão, falha explicitamente com `503`, porque o `mini` troca a nota fiscal pelo número do pedido. Sem nenhum modelo, as features síncronas e o streaming respondem `503` explícito em até ~8 s, e o relatório vai para `failed` com motivo em ~6 s. Nenhum cenário chega ao `504` da borda.
 
 ## Diagnóstico da v1
 
@@ -141,6 +149,14 @@ pip install -r tests/requirements.txt && pytest tests/characterization -q
 
 A suíte (`tests/characterization/`) chama só `localhost:8000`, e usa `POST localhost:8090/admin/reset` antes de cada teste para deixar o provider em modo normal. Os valores esperados são golden masters capturados da app recebida: corpo completo de F1 e F4 (dois tickets, um com nota fiscal e pedido no mesmo texto), texto exato da sugestão da F2 e relatório completo de 1 dia da F3 (`tests/characterization/golden/`), além dos `422` de entrada inválida. A suíte não fixa nem a quantidade de chamadas ao provider nem qual provider atende, porque isso muda legitimamente na refatoração. Para outra base, use `HELPDESK_URL` e `PROVIDER_URL`. Leva ~30 s, quase todo na F2 (~16 s) e na F3 (~10 s).
 
+Na `main`, F2 e F3 mudaram de modo de execução (streaming e assíncrono). Por isso, `tests/characterization/` continua idêntico ao das tags `v1-coupled` e `v2-decoupled`, onde ele é o juiz da refatoração e passa inteiro, e o contrato da `main` fica em `tests/contract/`:
+
+```
+pytest tests/contract -q          # 17 testes, ~3 min (inclui o relatório do mês e os cenários de falha)
+```
+
+A suíte de contrato reaproveita os golden masters: o texto concatenado do stream da F2 e o relatório de 1 dia da F3 são comparados com os mesmos valores da v1. Rodada na `main`, a suíte de caracterização falha de propósito em exatamente 3 testes que fixam o contrato síncrono antigo: `test_f2_sugere_resposta`, `test_f3_relatorio_de_um_dia` e `test_f3_periodo_sem_tickets`. Os outros 16 (F1, F4 e os `422`) continuam passando. Para conferir a suíte numa tag: `git worktree add ../v2 v2-decoupled`, subir aquela versão e rodar `pytest ../v2/tests/characterization -q`.
+
 Prova de que a suíte pega mudança de comportamento (feita na v1): trocar temporariamente `EXTRACTION_MODEL` e `SUGGESTION_MODEL` de `app/helpdesk/config.py` para `mini` e reconstruir a app derruba exatamente 2 testes (F4 com nota fiscal e F2); revertido, os 19 voltam a passar. A partir da v2 o equivalente é trocar o modelo das capacidades em `gateway/config.yaml`.
 
 Métrica de acoplamento (não precisa do compose no ar):
@@ -201,7 +217,26 @@ O que saiu de onde, e por quê:
 - `tickets` virou `TicketSource`, em `ports`, mais `adapters.tickets_file`.
 - As features e os adapters são folhas concretas com um único cliente (`main`), por isso ficam em I 0,5–0,67 e D 0,33–0,5, fora da zona de dor. O plano registra por que não se criaram dependências para empurrá-los para a reta.
 
-Única exceção que sobra: `schemas`, os tipos de valor do contrato HTTP. Eles mudam só quando o contrato muda, e o contrato é fixado pela suíte. ADR da métrica: _Etapa 9_.
+Única exceção que sobra: `schemas`, os tipos de valor do contrato HTTP. Eles mudam só quando o contrato muda, e o contrato é fixado pela suíte. ADR da métrica: [0008](docs/adr/0008-leitura-da-metrica-e-excecoes.md).
+
+### main
+
+[`metrics/results/main.csv`](metrics/results/main.csv) · ![A × I main](metrics/results/main.png)
+
+| component | ca | ce | i | a | d |
+|---|---|---|---|---|---|
+| adapters.gateway | 1 | 1 | 0.5 | 0 | 0.5 |
+| adapters.memory_jobs | 1 | 1 | 0.5 | 0 | 0.5 |
+| adapters.tickets_file | 1 | 1 | 0.5 | 0 | 0.5 |
+| classification | 1 | 2 | 0.67 | 0 | 0.33 |
+| extraction | 1 | 2 | 0.67 | 0 | 0.33 |
+| main | 0 | 8 | 1 | 0 | 0 |
+| ports | 7 | 0 | 0 | 1 | 0 |
+| report | 1 | 2 | 0.67 | 0 | 0.33 |
+| schemas | 5 | 0 | 0 | 0 | 1 |
+| suggestion | 1 | 2 | 0.67 | 0 | 0.33 |
+
+Os modos de execução não reacoplaram nada. O streaming entrou como `LLMGateway.stream`, na mesma porta e no mesmo adapter. O assíncrono entrou como a porta `JobStore` e o adapter `adapters.memory_jobs`, que guarda o estado em memória e é o ponto de troca se um dia for preciso fila ou banco (ADR 0004). `ports` ganhou um dependente (Ca 6 → 7) e continua sobre a reta. A zona de dor tem só `schemas`, a exceção declarada.
 
 ## Tabela de capacidades
 
@@ -211,7 +246,7 @@ Mapeamento em [`gateway/config.yaml`](gateway/config.yaml). A app conhece só os
 |---|---|---|---|---|---|---|
 | `ticket-classify` | F1 | `openai/gpt-fake-large` | `anthropic/claude-fake-large` | `openai/gpt-fake-mini` | 5 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
 | `ticket-extract` | F4 | `openai/gpt-fake-large` | `anthropic/claude-fake-large` | nenhum (falha explícita) | 5 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
-| `ticket-reply` | F2 | `anthropic/claude-fake-large` | `openai/gpt-fake-large` | `anthropic/claude-fake-mini` | 20 s (4 s sem bytes no streaming, Etapa 8) | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
+| `ticket-reply` | F2 | `anthropic/claude-fake-large` | `openai/gpt-fake-large` | `anthropic/claude-fake-mini` | 4 s até o 1º byte do stream (`stream_timeout`); 20 s sem streaming | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
 | `topics-report` | F3 (por lote) | `anthropic/claude-fake-large` | `openai/gpt-fake-large` | `anthropic/claude-fake-mini` | 20 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
 
 Política de retry (`router_settings.retry_policy`, igual para todos os destinos):
@@ -226,20 +261,25 @@ Contagens observadas em `/admin/calls`, pela borda, com `python3 scripts/resilie
 
 | Cenário (provider-fake) | Feature | Resultado pela borda | Tentativas por destino |
 |---|---|---|---|
-| normal | F1 / F4 / F2 / F3 | `200` em 1,2 / 1,2 / 16,2 / 9,9 s | 1 no primário |
-| `anthropic` em `error_500` | F2 | `200` em 18,2 s, texto do large | claude-large 2 → gpt-large 1 |
-| `anthropic` em `error_500` | F3 (1 dia) | `200` em 12,2 s, relatório idêntico | claude-large 2 → gpt-large 1 |
+| normal | F1 / F4 | `200` em 1,2 / 1,2 s | 1 no primário |
+| normal | F2 | stream: 1º trecho em ~0,9 s, 613 trechos em 17,8 s | 1 no primário |
+| normal | F3 (1 dia) | `202` → `303` em 10,2 s | 1 no primário |
+| `anthropic` em `error_500` | F2 | stream completo (texto do large) em 20,4 s; 1º trecho em ~3,3 s | claude-large 2 → gpt-large 1 |
+| `anthropic` em `error_500` | F3 (1 dia) | `202` → `303` em 12,2 s, relatório idêntico | claude-large 2 → gpt-large 1 |
+| `claude-fake-large` em `timeout` | F2 | stream completo em 22,0 s; 1º trecho em ~5 s | claude-large 1 (cortado em 4 s) → gpt-large 1 |
+| `anthropic` em `midstream_error` | F2 | `200`, 153 trechos e então `event: error` | claude-large 1 (o stream já começou; sem troca no meio) |
 | `openai` em `error_500` | F1 / F4 | `200` em 3,4 / 3,3 s, mesma resposta | gpt-large 2 → claude-large 1 |
 | os dois `large` em `error_500` | F1 | `200` em 5,5 s (mini) | gpt-large 2 → claude-large 2 → gpt-mini 1 |
-| os dois `large` em `error_500` | F2 | `200` em 7,9 s, sugestão de 1.096 caracteres (mini) | claude-large 2 → gpt-large 2 → claude-mini 1 |
-| os dois `large` em `error_500` | F3 (1 dia) | `200` em 7,9 s (mini; mesmo relatório) | claude-large 2 → gpt-large 2 → claude-mini 1 |
+| os dois `large` em `error_500` | F2 | stream com 1.096 caracteres (mini), completo em 7,1 s | claude-large 2 → gpt-large 2 → claude-mini 1 |
+| os dois `large` em `error_500` | F3 (1 dia) | `202` → `303` em 7,1 s (mini; mesmo relatório) | claude-large 2 → gpt-large 2 → claude-mini 1 |
 | os dois `large` em `error_500` | F4 | `503` em 4,5 s | gpt-large 2 → claude-large 2 |
 | `gpt-fake-large` em `timeout` | F1 | `200` em 6,2 s (≤ 15 s) | gpt-large 1 (504, cortado em 5 s) → claude-large 1 |
 | `openai` em `error_429` | F1 | `200` em 7,8 s | gpt-large 3 (intervalo ~2,3 s, Retry-After) → claude-large 1 |
-| os dois providers em `error_500` | F1 / F2 / F3 | `503` em 8,0 / 6,9 / 7,7 s | large 2 → large 2 → mini 2 |
+| os dois providers em `error_500` | F1 / F2 | `503` em 6,7 / 7,5 s | large 2 → large 2 → mini 2 |
+| os dois providers em `error_500` | F3 (mês) | `202`, depois `failed` com motivo em 6,1 s | large 2 → large 2 → mini 2 (1º lote) |
 | os dois providers em `error_500` | F4 | `503` em 4,8 s | gpt-large 2 → claude-large 2 |
 
-Limitação conhecida até a Etapa 8: a F2 ainda é síncrona. Com o primário da F2 em `timeout`, o gateway espera 20 s e o fallback leva mais ~16 s, o que passa do timeout de 25 s da app. A app responde `503` em 25 s (nunca `504` da borda), mas o fallback termina no gateway depois disso. O streaming da Etapa 8 resolve, porque com `stream_timeout: 4` a troca de destino acontece em 4 s.
+No `midstream_error`, o gateway não troca de destino depois que o stream começou, e o cliente recebe o `event: error` do contrato. Repetir a geração no outro provider duplicaria o texto que o atendente já está lendo.
 
 ## Tabela de fallback
 
@@ -248,17 +288,69 @@ O que acontece quando não há nenhum modelo `large` disponível (os dois `large
 | Feature | Comportamento | Status | O que o cliente recebe |
 |---|---|---|---|
 | F1 classificação | Responde com `gpt-fake-mini` | `200` | Mesmo contrato e mesma classificação (no `mini` ela é idêntica à do `large`) |
-| F2 sugestão | Responde com `claude-fake-mini` (degradação declarada) | `200` | Sugestão mais curta (~45% do tamanho), com os mesmos pontos; o atendente revisa antes de enviar |
-| F3 relatório | Cada lote usa `claude-fake-mini` | `200` | Mesmo relatório (no `mini` os temas e as contagens são idênticos) |
+| F2 sugestão | Stream com `claude-fake-mini` (degradação declarada) | `200` (`text/event-stream`, termina com `event: end`) | Sugestão mais curta (~45% do tamanho), com os mesmos pontos; o atendente revisa antes de enviar |
+| F3 relatório | Cada lote usa `claude-fake-mini` | `202` → `303` → `200` | Mesmo relatório (no `mini` os temas e as contagens são idênticos) |
 | F4 extração | Falha explícita, sem modelo fraco | `503` + `Retry-After: 30` | `{"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}` |
 
 Por que a F4 não tem `mini`: nos testes da Etapa 1, o `mini` devolve o número da nota fiscal no lugar do pedido e perde o produto (5 de 8 entradas), num formato válido que a validação da app não pega. A F4 alimenta uma automação sem revisão humana, então um pedido errado vira uma troca errada. Evidência: [`docs/evidence/etapa1-reconhecimento.md`](docs/evidence/etapa1-reconhecimento.md).
 
-Sem nenhum modelo disponível (os dois providers fora), as quatro features respondem `503` com o mesmo corpo, em menos de 8,1 s.
+Sem nenhum modelo disponível (os dois providers fora), F1, F2 e F4 respondem `503` com o mesmo corpo (a F2 antes de abrir o stream), em até ~8 s. A F3 aceita o pedido (`202`), e o status passa a `failed` com `reason` em ~6 s. Política e evidência: [ADR 0005](docs/adr/0005-politica-de-fallback.md).
 
 ## Fluxos
 
-_A preencher (Etapa 8)._
+Modo de cada feature e o porquê: [ADR 0004](docs/adr/0004-modo-de-execucao-por-feature.md). Contrato completo em `tests/contract/`.
+
+F1 classificação, síncrono (≤ 3 s):
+
+```
+curl -s -X POST localhost:8000/tickets/classification -H "Content-Type: application/json" \
+  -d '{"ticket_id": "TK-00042", "text": "Meu pedido #481516 não chegou e já passou do prazo, urgente"}'
+# 200 {"ticket_id":"TK-00042","category":"delivery","priority":"high"}
+```
+
+F2 sugestão de resposta, streaming SSE: leia os eventos à medida que chegam. Cada `data:` traz um trecho, e o stream termina com `event: end`, ou com `event: error` se a geração for interrompida depois do `200`.
+
+```
+curl -sN -X POST localhost:8000/tickets/reply-suggestion -H "Content-Type: application/json" \
+  -d '{"ticket_id": "TK-00042", "text": "Meu pedido #481516 não chegou e já passou do prazo, urgente"}'
+# 200 Content-Type: text/event-stream
+# data: {"chunk": "Olá!"}
+# data: {"chunk": " Sin"}
+# ...
+# event: end
+# data: {"ticket_id": "TK-00042"}
+```
+
+Erro no meio do stream (ex.: `anthropic` em `midstream_error`): `event: error` com `data: {"ticket_id": "TK-00042", "message": "A geração foi interrompida"}`. Sem nenhum modelo disponível, a resposta é `503` JSON antes de abrir o stream.
+
+F3 relatório de temas, assíncrono: peça, guarde o `Location` e consulte até receber `303`.
+
+```
+curl -si -X POST localhost:8000/reports/topics -H "Content-Type: application/json" \
+  -d '{"start": "2026-08-01", "end": "2026-08-31"}'
+# 202 Accepted   Location: /reports/topics/status/<id>   Retry-After: 5
+# {"id":"<id>","state":"running","status_url":"/reports/topics/status/<id>"}
+
+curl -si localhost:8000/reports/topics/status/<id>
+# 200 {"state":"running","progress":"1800/5000"}                  enquanto processa (Retry-After: 5)
+# 200 {"state":"failed","progress":"0/5000","reason":"..."}         se falhar
+# 303 See Other   Location: /reports/topics/<id>                  quando pronto (~1,5 min para o mês)
+
+curl -s localhost:8000/reports/topics/<id>
+# 200 {"start":"2026-08-01","end":"2026-08-31","total_tickets":5000,"topics":[...]}
+```
+
+Atalho: `curl -sL localhost:8000/reports/topics/status/<id>` mostra o status enquanto o relatório roda e o relatório quando ele fica pronto, porque segue o `303`. Um id desconhecido dá `404`, assim como pedir o resultado antes de ficar pronto. `start > end` dá `422` na hora.
+
+F4 extração, síncrono:
+
+```
+curl -s -X POST localhost:8000/tickets/extraction -H "Content-Type: application/json" \
+  -d '{"ticket_id": "TK-00036", "text": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511."}'
+# 200 {"ticket_id":"TK-00036","order_number":"#389511","product":"tapete de yoga"}
+# 503 {"detail":"Serviço de IA indisponível no momento. Tente novamente mais tarde.","capability":"ticket-extract"}
+#     com Retry-After: 30, se nenhum modelo large estiver disponível
+```
 
 ## Troca de modelo
 
@@ -310,4 +402,14 @@ O orçamento estoura na 2ª chamada (US$ 0,000295 > 0,0002), e a recusa vem na 3
 
 ## Mapa de decisões
 
-_A preencher (Etapa 9)._
+| ADR | Nível | Resumo |
+|---|---|---|
+| [0001](docs/adr/0001-providers-aceitos-e-teto-de-gasto.md) | corporativa | Só OpenAI e Anthropic, sempre via gateway; teto de US$ 100 a cada 30 dias para a IA do helpdesk, na chave da app |
+| [0002](docs/adr/0002-ai-gateway-litellm.md) | solução | LiteLLM self-hosted (`v1.102.1`) entre app e providers; retry, timeout, fallback e governança moram nele |
+| [0003](docs/adr/0003-capacidades-logicas.md) | solução | Uma capacidade lógica por feature, mapeada para o `large` da v1, com grupos `-alt`/`-mini` só no gateway |
+| [0004](docs/adr/0004-modo-de-execucao-por-feature.md) | solução | F1/F4 síncronas, F2 streaming SSE, F3 Async Request-Reply com estado em memória (uma seção por feature) |
+| [0005](docs/adr/0005-politica-de-fallback.md) | solução | Fallback técnico para o outro `large` em todas; `mini` em F1, F2 e F3; F4 falha com `503` (evidência do `mini`) |
+| [0006](docs/adr/0006-governanca-chaves-orcamento-limites.md) | solução | Chaves virtuais com `max_budget` e `rpm_limit` aplicados no gateway, com preços declarados; recusa antes do provider |
+| [0007](docs/adr/0007-postgres-para-o-gateway.md) | software | Postgres (`db`) porque o LiteLLM exige banco para chaves virtuais, gasto e limites |
+| [0008](docs/adr/0008-leitura-da-metrica-e-excecoes.md) | software | Leitura das três medições; `schemas` é a única exceção (estável por natureza) |
+| [0009](docs/adr/0009-ports-and-adapters-componente-unico-do-gateway.md) | software | Ports & adapters; `adapters/gateway.py` é o único que chama o gateway, e só `main.py` o importa |
