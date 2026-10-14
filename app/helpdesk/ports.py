@@ -1,4 +1,5 @@
 """Portas da aplicação: o que as features precisam do mundo externo, sem dizer como é feito."""
+from datetime import date
 from typing import Protocol
 
 
@@ -10,3 +11,9 @@ class LLMGateway(Protocol):
     """
 
     def complete(self, capability: str, prompt: str) -> str: ...
+
+
+class TicketSource(Protocol):
+    """Tickets criados no período [start, end], na ordem de origem, como dicts com `id` e `text`."""
+
+    def in_period(self, start: date, end: date) -> list[dict]: ...

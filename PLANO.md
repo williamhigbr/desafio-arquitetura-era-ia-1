@@ -223,6 +223,8 @@ Tarefas
 - Medir `v2-decoupled`, versionar CSV/PNG, atualizar o plano, `git tag v2-decoupled && git push --tags`.
 - Conferir `git diff v1-coupled v2-decoupled -- tests/characterization/` vazio.
 
+Status: concluída em 2026-10-13. F4, F2 e F3 (com `TicketSource`) foram migradas uma por vez, com `19 passed` em cada passo. `config.py`, `llm.py`, `tickets.py`, `anthropic` e o `env_file` da app foram removidos. Só `schemas` fica na zona de dor (exceção). O critério de pronto está em `docs/evidence/refactor/v2-criterio-de-pronto.txt`. Tag `v2-decoupled` publicada.
+
 <details><summary>P11. Por que <code>max_retries=0</code> na app?</summary>
 
 Retries em vários lugares se multiplicam: 3 tentativas no SDK × 3 no gateway = até 9 chamadas por requisição, além de estourar o orçamento de latência. O dono do retry passa a ser o gateway (lugar único, com backoff e fallback). O `/admin/calls` mostra a multiplicação imediatamente se você esquecer.

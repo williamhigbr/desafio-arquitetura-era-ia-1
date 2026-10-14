@@ -159,12 +159,12 @@ def plot(rows: list[Row], path: Path, title: str) -> None:
     groups: dict[tuple[float, float], list[str]] = {}
     for r in rows:
         groups.setdefault((r.i, r.a), []).append(r.component)
-    # Rótulos de pontos vizinhos (mesma altura, I a menos de 0,15) são empilhados para não
+    # Rótulos de pontos vizinhos (mesma altura, I a menos de 0,25) são empilhados para não
     # se sobreporem; o deslocado ganha uma linha até o ponto.
     placed: list[tuple[float, float, float]] = []  # (i, a, topo do rótulo em pontos)
     for (i, a), names in sorted(groups.items()):
         ax.scatter(i, a, s=60, color="tab:blue", zorder=3)
-        near = [top for (pi, pa, top) in placed if abs(pi - i) < 0.15 and abs(pa - a) < 0.05]
+        near = [top for (pi, pa, top) in placed if abs(pi - i) < 0.25 and abs(pa - a) < 0.05]
         y_off = max(near) + 6 if near else 6
         ax.annotate("\n".join(names), (i, a), xytext=(6, y_off), textcoords="offset points", fontsize=8,
                     va="bottom", ha="right" if i > 0.85 else "left",

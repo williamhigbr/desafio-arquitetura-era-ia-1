@@ -1,0 +1,22 @@
+## passo: v2-passo1-f4
+$ pytest tests/characterization -q
+...................                                                      [100%]
+19 passed in 30.88s
+$ python metrics/coupling.py app/helpdesk --name v2-passo1-f4
+component,ca,ce,i,a,d
+adapters.gateway,1,1,0.5,0,0.5
+classification,1,2,0.67,0,0.33
+config,5,0,0,0,1
+extraction,1,2,0.67,0,0.33
+llm,2,1,0.33,0,0.67
+main,0,7,1,0,0
+ports,3,0,0,1,0
+report,1,4,0.8,0,0.2
+schemas,5,0,0,0,1
+suggestion,1,3,0.75,0,0.25
+tickets,1,1,0.5,0,0.5
+$ /admin/calls do último teste da suíte + uma F1/F4 de amostra
+   openai gpt-fake-large extract 200
+   openai gpt-fake-large classify 200
+$ grep -rn adapters app/helpdesk --include=*.py
+app/helpdesk/main.py:4:from .adapters.gateway import GatewayClient

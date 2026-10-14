@@ -153,6 +153,44 @@ Nota de projeto vinda do mesmo ponto: o adapter herda explicitamente de `LLMGate
 
 F4 → F2 → F3 (com `tickets` recebendo o caminho do arquivo por injeção) → remover `config.py` (R1) → remover `llm.py` e `anthropic` do `requirements.txt` → tirar o `env_file` do serviço `app` → medir `v2-decoupled` → tag.
 
+## Etapa 6: escala da refatoração até a `v2-decoupled`
+
+Mesmo padrão do piloto, um componente por vez. Cada passo foi executado com `scripts/refactor_step.sh <passo>`, que reconstrói a app, roda a suíte, mede e mostra `/admin/calls`. As saídas estão em [`docs/evidence/refactor/`](evidence/refactor/).
+
+| Passo | Mudança | Suíte | Efeito na métrica |
+|---|---|---|---|
+| 1. F4 | `extraction` recebe o gateway e usa `ticket-extract` | 19 passed | `llm` Ca 3 → 2, `config` Ca 6 → 5 |
+| 2. F2 | `suggestion` recebe o gateway e usa `ticket-reply` | 19 passed | `llm` Ca 2 → 1, `config` Ca 5 → 4 |
+| 3. F3 + tickets | `TicketSource` em `ports`; `tickets.py` vira `adapters/tickets_file.py` (`JsonlTicketSource`); `report` recebe gateway e fonte de tickets e guarda `TICKETS_PER_CALL` | 19 passed | `llm` fica sem dependentes (Ca = 0); `config` Ca 4 → 2; `report` Ce 4 → 2 |
+| 4. config/llm (R1) | `config.py` e `llm.py` removidos; leitura do ambiente em `main`; `anthropic` fora do `requirements.txt`; `env_file` e `depends_on: provider-fake` fora do serviço `app` | 19 passed | só `schemas` continua na zona de dor |
+
+Medição final ([`metrics/results/v2-decoupled.csv`](../metrics/results/v2-decoupled.csv)):
+
+| component | ca | ce | i | a | d | zona de dor |
+|---|---|---|---|---|---|---|
+| adapters.gateway | 1 | 1 | 0.5 | 0 | 0.5 | não |
+| adapters.tickets_file | 1 | 1 | 0.5 | 0 | 0.5 | não |
+| classification | 1 | 2 | 0.67 | 0 | 0.33 | não |
+| extraction | 1 | 2 | 0.67 | 0 | 0.33 | não |
+| main | 0 | 7 | 1 | 0 | 0 | não |
+| ports | 6 | 0 | 0 | 1 | 0 | não (sobre a reta) |
+| report | 1 | 2 | 0.67 | 0 | 0.33 | não |
+| schemas | 5 | 0 | 0 | 0 | 1 | sim, exceção declarada ("estável por natureza": tipos de valor do contrato HTTP fixado pela suíte; ADR da métrica na Etapa 9) |
+| suggestion | 1 | 2 | 0.67 | 0 | 0.33 | não |
+
+Verificação do critério de pronto ([`docs/evidence/refactor/v2-criterio-de-pronto.txt`](evidence/refactor/v2-criterio-de-pronto.txt)):
+
+1. A suíte passa (`19 passed`) e `git diff v1-coupled -- tests/characterization/` está vazio.
+2. A métrica tem só `schemas` na zona de dor, que é a exceção.
+3. `grep adapters` encontra só `main.py` (linhas 6 e 7).
+4. Os greps de modelos físicos, chaves e `provider-fake` em `app/` voltam vazios; `import anthropic` dentro da app dá `ModuleNotFoundError`.
+5. `docker compose exec app env` mostra só `GATEWAY_URL`/`GATEWAY_API_KEY`, e o `docker compose config` do serviço `app` não tem `env_file`.
+6. `/admin/calls` registra 4 requisições e 4 chamadas, com as mesmas tarefas e os mesmos `large` da v1 (`gpt-fake-large` para classify/extract, `claude-fake-large` para suggest/topics). Com `anthropic` em `error_500`, a F2 chega ao provider 1 vez, contra 3 na v1: `max_retries=0` na app e `num_retries: 0` no gateway. O status externo continua `500`, como na v1, porque resiliência é a Etapa 7.
+
+### R3 (2026-10-13, passo 3): `tickets` vira porta + adapter, em vez de ficar como módulo concreto
+
+O plano original deixava em aberto se `tickets` entraria em `ports`. O passo 3 mostrou que, sem `config`, `tickets.py` precisaria receber o caminho do arquivo de algum lugar. Ler o caminho dentro dele recriaria o acoplamento ao ambiente, e importar `main` seria um ciclo. Decisão: `TicketSource(Protocol)` em `ports`, a implementação de arquivo em `adapters/tickets_file.py` e a composição em `main`, o mesmo padrão do gateway. A F3 passa a depender só de abstrações (`LLMGateway`, `TicketSource`). Isso tem efeito prático: o relatório pode ser testado ou rodado sobre outra fonte de tickets sem tocar em `report.py`, o que vai ajudar na F3 assíncrona da Etapa 8.
+
 ## Diário do handoff
 
 | Passo | O que o agente propôs/fez | Evidência apresentada | Decisão do autor |
@@ -161,3 +199,7 @@ F4 → F2 → F3 (com `tickets` recebendo o caminho do arquivo por injeção) �
 | Piloto F1 | `ports.py`, `adapters/gateway.py`, F1 com gateway injetado, composição em `main` | `19 passed`; `/admin/calls` `gpt-fake-large classify`; F1 `500` com o gateway parado; tabela antes/depois | aceito |
 | Revisões R1/R2 | dissolver `config` em `main`; manter o critério pela zona de dor | métrica do piloto (Ca de `config` inalterado; D das folhas explicado) | aceito |
 | Rejeitado pelo agente | `GatewayClient` sem herdar de `LLMGateway` (tipagem estrutural) | escondia uma dependência real e jogava o adapter na zona de dor | — |
+| Etapa 6, passos 1–3 | F4, F2 e F3 migradas uma por vez; `TicketSource` + `JsonlTicketSource` (R3) | `19 passed` em cada passo; `/admin/calls` com o `large` esperado; CSV por passo em `docs/evidence/refactor/` | aceito |
+| Etapa 6, passo 4 | remover `config.py`, `llm.py`, `anthropic` e `env_file` da app | 1ª execução: o `git rm` falhou (arquivo com mudanças locais), e o passo mediu `config`/`llm` ainda presentes, contradizendo a mudança declarada. A medição denunciou o erro; corrigido com `git rm -f` e o passo refeito | rejeitada a 1ª execução, aceita a 2ª |
+| Critério de pronto | greps, env, compose config, `/admin/calls` | `docs/evidence/refactor/v2-criterio-de-pronto.txt` | aceito → tag `v2-decoupled` |
+| Rejeitado pelo agente | manter `config.py` com só os valores do gateway como "estável por natureza" | contrariava a R1; a função dele (ler o ambiente) pertence à composição | — |

@@ -1,0 +1,71 @@
+## Critério de pronto da v2-decoupled (docs/refactoring-plan.md)
+
+### 1. Suíte inalterada desde v1-coupled
+$ git diff --stat v1-coupled -- tests/characterization/
+(vazio)
+
+### 3. Só main importa adapters
+$ grep -rn 'adapters' app/helpdesk --include=*.py
+app/helpdesk/main.py:6:from .adapters.gateway import GatewayClient
+app/helpdesk/main.py:7:from .adapters.tickets_file import JsonlTicketSource
+
+### 4. Nenhum modelo físico nem chave de provider em app/
+$ grep -rnE 'gpt-fake|claude-fake' app/
+(vazio)
+$ grep -rnE 'FAKE_OPENAI_KEY|FAKE_ANTHROPIC_KEY|sk-fake-openai|sk-ant-fake|provider-fake' app/
+(vazio)
+$ grep -rn anthropic app/
+(vazio)
+$ docker compose exec app python -c 'import anthropic'
+ModuleNotFoundError: No module named 'anthropic'
+
+### 5. Ambiente e definição do serviço app
+$ docker compose exec app env | grep -iE 'KEY|GATEWAY|FAKE|ANTHROPIC|OPENAI'
+GATEWAY_URL=http://gateway:4000
+GATEWAY_API_KEY=sk-helpdesk-app-0001
+GPG_KEY=... (variável da imagem python:3.12-slim, não é credencial)
+$ docker compose config app (sem env_file; só GATEWAY_*)
+  app:
+    environment:
+      GATEWAY_API_KEY: sk-helpdesk-app-0001
+      GATEWAY_URL: http://gateway:4000
+    networks:
+      default: null
+    volumes:
+      - type: bind
+        source: /Users/william.higino/Documents/GitHub/desafio-arquitetura-era-ia-1/data
+        target: /data
+        read_only: true
+        bind: {}
+    build:
+      context: /Users/william.higino/Documents/GitHub/desafio-arquitetura-era-ia-1/app
+      dockerfile: Dockerfile
+    depends_on:
+      gateway:
+        condition: service_healthy
+        required: true
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')
+      timeout: 3s
+      interval: 2s
+      retries: 20
+  db:
+
+### 6. /admin/calls: mesmas tarefas e modelos large da v1, uma tentativa por requisição
+  classification HTTP 200 1.098746s
+  extraction HTTP 200 1.103142s
+  reply-suggestion HTTP 200 15.984263s
+  topics HTTP 200 9.846935s
+  4 chamadas
+   openai gpt-fake-large classify stream=False 200
+   openai gpt-fake-large extract stream=False 200
+   anthropic claude-fake-large suggest stream=False 200
+   anthropic claude-fake-large topics stream=False 200
+
+### Retry não multiplicado: anthropic em error_500, F2 pela borda
+  F2 HTTP 500 0.033910s
+  1 chamada(s) ao provider (v1: 3)

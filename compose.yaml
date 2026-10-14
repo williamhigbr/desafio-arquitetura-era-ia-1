@@ -17,9 +17,7 @@ services:
 
   app:
     build: ./app
-    # Piloto (Etapa 5): F1 já usa o gateway; F2–F4 ainda usam os SDKs dos providers e precisam
-    # das chaves. O env_file sai daqui quando a última feature migrar (Etapa 6).
-    env_file: .env
+    # A app recebe só o endereço e a chave do gateway: nenhuma chave de provider no ambiente.
     environment:
       GATEWAY_URL: http://gateway:4000
       GATEWAY_API_KEY: ${GATEWAY_APP_KEY}
@@ -31,8 +29,6 @@ services:
       timeout: 3s
       retries: 20
     depends_on:
-      provider-fake:
-        condition: service_healthy
       gateway:
         condition: service_healthy
 

@@ -141,7 +141,7 @@ pip install -r tests/requirements.txt && pytest tests/characterization -q
 
 A suíte (`tests/characterization/`) chama só `localhost:8000`, e usa `POST localhost:8090/admin/reset` antes de cada teste para deixar o provider em modo normal. Os valores esperados são golden masters capturados da app recebida: corpo completo de F1 e F4 (dois tickets, um com nota fiscal e pedido no mesmo texto), texto exato da sugestão da F2 e relatório completo de 1 dia da F3 (`tests/characterization/golden/`), além dos `422` de entrada inválida. A suíte não fixa nem a quantidade de chamadas ao provider nem qual provider atende, porque isso muda legitimamente na refatoração. Para outra base, use `HELPDESK_URL` e `PROVIDER_URL`. Leva ~30 s, quase todo na F2 (~16 s) e na F3 (~10 s).
 
-Prova de que a suíte pega mudança de comportamento: trocar temporariamente `EXTRACTION_MODEL` e `SUGGESTION_MODEL` para `mini` e reconstruir a app derruba exatamente 2 testes (F4 com nota fiscal e F2); revertido, os 19 voltam a passar.
+Prova de que a suíte pega mudança de comportamento (feita na v1): trocar temporariamente `EXTRACTION_MODEL` e `SUGGESTION_MODEL` de `app/helpdesk/config.py` para `mini` e reconstruir a app derruba exatamente 2 testes (F4 com nota fiscal e F2); revertido, os 19 voltam a passar. A partir da v2 o equivalente é trocar o modelo das capacidades em `gateway/config.yaml`.
 
 Métrica de acoplamento (não precisa do compose no ar):
 
@@ -176,11 +176,36 @@ Régua do requisito 3, implementada em `metrics/coupling.py` com `ast`: componen
 | suggestion | 1 | 3 | 0.75 | 0 | 0.25 |
 | tickets | 1 | 1 | 0.5 | 0 | 0.5 |
 
-Não há nenhuma abstração (A = 0 em todos). Três componentes caem na zona de dor (I < 0,5 e A < 0,5): `config` (D = 1), `schemas` (D = 1) e `llm` (D = 0,8). `llm` é o problema real: concentra SDK, provider, formato e credencial, que são as partes voláteis, e as 4 features dependem dele. `schemas` são tipos de valor do contrato HTTP. Leitura completa e exceções: _a preencher (Etapas 6 e 8, ADR da métrica)._
+Não há nenhuma abstração (A = 0 em todos). Três componentes caem na zona de dor (I < 0,5 e A < 0,5): `config` (D = 1), `schemas` (D = 1) e `llm` (D = 0,8). `llm` é o problema real: concentra SDK, provider, formato e credencial, que são as partes voláteis, e as 4 features dependem dele. `schemas` são tipos de valor do contrato HTTP.
+
+### v2-decoupled
+
+[`metrics/results/v2-decoupled.csv`](metrics/results/v2-decoupled.csv) · ![A × I v2-decoupled](metrics/results/v2-decoupled.png)
+
+| component | ca | ce | i | a | d |
+|---|---|---|---|---|---|
+| adapters.gateway | 1 | 1 | 0.5 | 0 | 0.5 |
+| adapters.tickets_file | 1 | 1 | 0.5 | 0 | 0.5 |
+| classification | 1 | 2 | 0.67 | 0 | 0.33 |
+| extraction | 1 | 2 | 0.67 | 0 | 0.33 |
+| main | 0 | 7 | 1 | 0 | 0 |
+| ports | 6 | 0 | 0 | 1 | 0 |
+| report | 1 | 2 | 0.67 | 0 | 0.33 |
+| schemas | 5 | 0 | 0 | 0 | 1 |
+| suggestion | 1 | 2 | 0.67 | 0 | 0.33 |
+
+O que saiu de onde, e por quê:
+
+- `llm` (D 0,8) deixou de existir. O papel dele foi dividido entre `ports.LLMGateway`, que é a abstração da qual as features dependem e fica sobre a reta (A = 1, I = 0), e `adapters.gateway`, o único componente da app que chama o gateway.
+- `config` (D 1) também deixou de existir, absorvido por `main`, que é o ponto de composição e o único lugar que lê o ambiente.
+- `tickets` virou `TicketSource`, em `ports`, mais `adapters.tickets_file`.
+- As features e os adapters são folhas concretas com um único cliente (`main`), por isso ficam em I 0,5–0,67 e D 0,33–0,5, fora da zona de dor. O plano registra por que não se criaram dependências para empurrá-los para a reta.
+
+Única exceção que sobra: `schemas`, os tipos de valor do contrato HTTP. Eles mudam só quando o contrato muda, e o contrato é fixado pela suíte. ADR da métrica: _Etapa 9_.
 
 ## Tabela de capacidades
 
-Estado atual (piloto da Etapa 5): mapeamento em `gateway/config.yaml`, sem retry nem fallback, que entram na Etapa 7. Só a F1 já chama o gateway; F2–F4 migram na Etapa 6.
+Estado atual (`v2-decoupled`): mapeamento em `gateway/config.yaml`, sem retry nem fallback, que entram na Etapa 7. As 4 features chamam só o gateway, pelo componente `app/helpdesk/adapters/gateway.py`.
 
 | Capacidade lógica | Feature | Modelo primário | Fallback técnico | Modelo fraco | Máx. tentativas por destino |
 |---|---|---|---|---|---|
