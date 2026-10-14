@@ -1,0 +1,7 @@
+# Chaves virtuais do gateway, criadas/atualizadas automaticamente a cada subida do serviço
+# (gateway/provision_keys.py). O valor de cada chave vem do ambiente do gateway (.env), para
+# que a app possa recebê-lo por variável sem passo manual.
+keys:
+  - alias: helpdesk-app
+    key: os.environ/GATEWAY_APP_KEY
+    models: [ticket-classify, ticket-reply, ticket-extract, topics-report]

@@ -1,0 +1,44 @@
+# Configuração do AI Gateway (LiteLLM v1.102.1).
+#
+# A app só conhece os nomes lógicos (model_name) abaixo; o modelo físico, o provider, a URL e a
+# credencial de cada um vivem só aqui. Trocar o modelo de uma capacidade = editar este arquivo e
+# `docker compose restart gateway` (a app não é reconstruída nem reiniciada).
+#
+# v2-decoupled: cada capacidade aponta para o mesmo modelo `large` que a feature usava na v1, para
+# que a suíte de caracterização continue passando sem alteração. Resiliência, fallback, preços e
+# governança entram na Etapa 7.
+
+model_list:
+  - model_name: ticket-classify          # F1 classificação
+    litellm_params:
+      model: openai/gpt-fake-large
+      api_base: http://provider-fake:8090/openai/v1
+      api_key: os.environ/FAKE_OPENAI_KEY
+
+  - model_name: ticket-extract           # F4 extração
+    litellm_params:
+      model: openai/gpt-fake-large
+      api_base: http://provider-fake:8090/openai/v1
+      api_key: os.environ/FAKE_OPENAI_KEY
+
+  - model_name: ticket-reply             # F2 sugestão de resposta
+    litellm_params:
+      model: anthropic/claude-fake-large
+      api_base: http://provider-fake:8090/anthropic
+      api_key: os.environ/FAKE_ANTHROPIC_KEY
+      max_tokens: 2000
+
+  - model_name: topics-report            # F3 relatório de temas
+    litellm_params:
+      model: anthropic/claude-fake-large
+      api_base: http://provider-fake:8090/anthropic
+      api_key: os.environ/FAKE_ANTHROPIC_KEY
+      max_tokens: 2000
+
+router_settings:
+  num_retries: 0        # v2: sem retry no gateway (comportamento da v1 é decidido na Etapa 7)
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  database_url: os.environ/DATABASE_URL
+  store_model_in_db: false   # os modelos vêm só deste arquivo: o arquivo prevalece sobre o banco

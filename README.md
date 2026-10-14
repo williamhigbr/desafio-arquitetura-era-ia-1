@@ -130,6 +130,8 @@ docker compose up -d --build --wait
 curl -s localhost:8000/health        # {"status":"ok"}
 ```
 
+Serviços: `edge` (borda, `:8000`), `app`, `gateway` (LiteLLM, `:4000`), `db` (Postgres do gateway) e `provider-fake` (`:8090`). A chave virtual da app (`GATEWAY_APP_KEY`) é criada pelo próprio gateway a cada subida (`gateway/entrypoint.sh` + `gateway/keys.yaml`), sem passo manual. Quem já tinha um `.env` de antes do gateway precisa refazer o `cp .env.example .env`.
+
 Testes de caracterização (contrato HTTP pela borda, com o compose no ar):
 
 ```
@@ -178,7 +180,14 @@ Não há nenhuma abstração (A = 0 em todos). Três componentes caem na zona de
 
 ## Tabela de capacidades
 
-_A preencher (Etapas 5 e 7)._
+Estado atual (piloto da Etapa 5): mapeamento em `gateway/config.yaml`, sem retry nem fallback, que entram na Etapa 7. Só a F1 já chama o gateway; F2–F4 migram na Etapa 6.
+
+| Capacidade lógica | Feature | Modelo primário | Fallback técnico | Modelo fraco | Máx. tentativas por destino |
+|---|---|---|---|---|---|
+| `ticket-classify` | F1 | `openai/gpt-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
+| `ticket-extract` | F4 | `openai/gpt-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
+| `ticket-reply` | F2 | `anthropic/claude-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
+| `topics-report` | F3 | `anthropic/claude-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
 
 ## Tabela de fallback
 

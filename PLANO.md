@@ -194,6 +194,8 @@ Agente: entregue a régua, a tabela da v1, o critério de pronto e a regra "um c
 
 Pronto quando: F1 passa pelo gateway, suíte verde, medição do piloto registrada, revisão escrita.
 
+Status: concluída em 2026-10-13. Plano, piloto, medição antes/depois e revisões R1 (`config` absorvido por `main`) e R2 (critério pela zona de dor) estão em `docs/refactoring-plan.md`. O gateway (LiteLLM v1.102.1 + Postgres) sobe com a chave da app criada automaticamente e sobrevive a `restart gateway`. A F1 passa pelo gateway (`19 passed`); com o gateway parado, a F1 falha e a F4 segue no SDK.
+
 <details><summary>P8. Como as virtual keys serão criadas sem passo manual? Quais as opções?</summary>
 
 (a) Entrypoint customizado no próprio `gateway`: sobe o LiteLLM, espera o health, chama `/key/generate` com chaves fixas e ignora "já existe". Sem serviço extra. (b) Serviço one-shot `gateway-init` (curl) com `depends_on: condition: service_completed_successfully` → mais uma peça e mais um ADR, e convém testar o comportamento com `docker compose up --wait`. Prefira (a) pela entrega enxuta; seja qual for, precisa sobreviver a `docker compose restart gateway` (exigido na troca de modelo).
