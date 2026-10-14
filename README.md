@@ -102,7 +102,7 @@ Causa:
 
 ```
 # 1) troca temporária em código (desfeita em seguida)
-sed -i '' 's/^CLASSIFICATION_MODEL = "gpt-fake-large"/CLASSIFICATION_MODEL = "gpt-fake-mini"/' app/helpdesk/config.py
+sed -i.bak 's/^CLASSIFICATION_MODEL = "gpt-fake-large"/CLASSIFICATION_MODEL = "gpt-fake-mini"/' app/helpdesk/config.py && rm app/helpdesk/config.py.bak
 docker compose restart app                       # só reiniciar
 # F1 pela borda; /admin/calls?last=1
 docker compose up -d --build --wait app          # reconstruir a imagem
@@ -138,7 +138,7 @@ docker compose up -d --build --wait
 curl -s localhost:8000/health        # {"status":"ok"}
 ```
 
-Serviços: `edge` (borda, `:8000`), `app`, `gateway` (LiteLLM, `:4000`), `db` (Postgres do gateway) e `provider-fake` (`:8090`). A chave virtual da app (`GATEWAY_APP_KEY`) é criada pelo próprio gateway a cada subida (`gateway/entrypoint.sh` + `gateway/keys.yaml`), sem passo manual. Quem já tinha um `.env` de antes do gateway precisa refazer o `cp .env.example .env`.
+Serviços: `edge` (borda, `:8000`), `app`, `gateway` (LiteLLM, `:4000`; outra porta do host com `GATEWAY_HOST_PORT=<porta>` no `.env`, e então troque `4000` nos comandos do roteiro de governança), `db` (Postgres do gateway) e `provider-fake` (`:8090`). A chave virtual da app (`GATEWAY_APP_KEY`) é criada pelo próprio gateway a cada subida (`gateway/entrypoint.sh` + `gateway/keys.yaml`), sem passo manual. Quem já tinha um `.env` de antes do gateway precisa refazer o `cp .env.example .env`.
 
 Testes de caracterização (contrato HTTP pela borda, com o compose no ar):
 

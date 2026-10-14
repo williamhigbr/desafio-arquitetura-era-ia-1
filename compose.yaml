@@ -42,7 +42,9 @@ services:
     volumes:
       - ./gateway:/etc/gateway:ro
     ports:
-      - "4000:4000"   # roteiro de governança chama o gateway direto
+      # Roteiro de governança chama o gateway direto. Porta do host configurável (padrão 4000)
+      # caso a 4000 já esteja em uso: GATEWAY_HOST_PORT no .env.
+      - "${GATEWAY_HOST_PORT:-4000}:4000"
     healthcheck:
       test: ["CMD-SHELL", "test -f /tmp/gateway-ready && /app/.venv/bin/python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:4000/health/liveliness')\""]
       interval: 3s

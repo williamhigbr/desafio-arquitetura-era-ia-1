@@ -1,0 +1,65 @@
+# Verificação do zero com Docker real (ubuntu, amd64): o mesmo caminho do avaliador.
+# Sobe com o comando oficial do README e percorre os critérios que dependem do ambiente.
+name: verify
+
+on:
+  push:
+    branches: [implementacao_desafio, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # tags v1-coupled/v2-decoupled para medir a v1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Versões
+        run: docker version --format '{{.Server.Version}}' && docker compose version
+
+      - name: Subida (comando do README)
+        run: |
+          cp .env.example .env
+          docker compose up -d --build --wait
+          curl -sf localhost:8000/health
+
+      - name: Dependências dos testes e da métrica
+        run: pip install -r tests/requirements.txt -r metrics/requirements.txt
+
+      - name: Critérios estáticos
+        run: |
+          ! grep -rE "gpt-fake|claude-fake" app/
+          ! grep -rE "FAKE_OPENAI_KEY|FAKE_ANTHROPIC_KEY|sk-fake-openai|sk-ant-fake" app/
+          ! docker compose exec -T app env | grep -E "FAKE_OPENAI_KEY|FAKE_ANTHROPIC_KEY"
+          ! docker compose config app | grep -E "env_file|FAKE_"
+          git diff --exit-code v1-coupled v2-decoupled -- tests/characterization/
+          git diff --exit-code "$(git rev-list --max-parents=0 HEAD)" -- provider-fake edge data
+
+      - name: Métrica (testes do script e reprodução da v1-coupled)
+        run: |
+          pytest metrics/tests -q
+          git worktree add ../v1 v1-coupled
+          python metrics/coupling.py ../v1/app/helpdesk --name v1-coupled
+          git diff --exit-code metrics/results/v1-coupled.csv
+
+      - name: Suíte de contrato da main (pela borda)
+        run: pytest tests/contract -q
+
+      - name: Governança e troca de modelo
+        run: |
+          scripts/governance.sh
+          grep -q "3ª chamada (orçamento estourado): HTTP 429 | /admin/calls 2 -> 2" docs/evidence/governanca/roteiro.txt
+          grep -q "3ª chamada (acima de 2/min): HTTP 429 | /admin/calls 4 -> 4" docs/evidence/governanca/roteiro.txt
+          scripts/swap_model.sh
+          grep -q "gpt-fake-mini classify 200" docs/evidence/troca-de-modelo/f1-large-para-mini.txt
+
+      - name: Logs em caso de falha
+        if: failure()
+        run: docker compose ps -a && docker compose logs --tail 80

@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Roteiro de governança: recusa por orçamento e por limite de requisições, ANTES do provider.
-# Chama o gateway direto (:4000) com as chaves de gateway/keys.yaml e conta /admin/calls antes/depois
+# Chama o gateway direto (localhost:${GATEWAY_HOST_PORT:-4000}) com as chaves de gateway/keys.yaml e conta /admin/calls antes/depois
 # de cada chamada. Grava docs/evidence/governanca/roteiro.txt.
 # Uso (com o compose no ar):  scripts/governance.sh
 set -uo pipefail
 cd "$(dirname "$0")/.." || exit 1
 set -a; . ./.env; set +a
-G=http://localhost:4000
+G=http://localhost:${GATEWAY_HOST_PORT:-4000}
 F=http://localhost:8090
 mkdir -p docs/evidence/governanca
 
