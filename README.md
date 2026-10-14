@@ -120,7 +120,26 @@ Causa:
 
 ## Como rodar
 
-_A preencher (Etapas 3 e 4): subida, testes de caracterização e script de métrica._
+Pré-requisitos: Docker com Compose v2 e Python 3.12.
+
+Subida:
+
+```
+cp .env.example .env
+docker compose up -d --build --wait
+curl -s localhost:8000/health        # {"status":"ok"}
+```
+
+Testes de caracterização (contrato HTTP pela borda, com o compose no ar):
+
+```
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r tests/requirements.txt && pytest tests/characterization -q
+```
+
+A suíte (`tests/characterization/`) chama só `localhost:8000`, e usa `POST localhost:8090/admin/reset` antes de cada teste para deixar o provider em modo normal. Os valores esperados são golden masters capturados da app recebida: corpo completo de F1 e F4 (dois tickets, um com nota fiscal e pedido no mesmo texto), texto exato da sugestão da F2 e relatório completo de 1 dia da F3 (`tests/characterization/golden/`), além dos `422` de entrada inválida. A suíte não fixa nem a quantidade de chamadas ao provider nem qual provider atende, porque isso muda legitimamente na refatoração. Para outra base, use `HELPDESK_URL` e `PROVIDER_URL`. Leva ~30 s, quase todo na F2 (~16 s) e na F3 (~10 s).
+
+Prova de que a suíte pega mudança de comportamento: trocar temporariamente `EXTRACTION_MODEL` e `SUGGESTION_MODEL` para `mini` e reconstruir a app derruba exatamente 2 testes (F4 com nota fiscal e F2); revertido, os 19 voltam a passar.
 
 ## Métrica
 

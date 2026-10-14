@@ -118,6 +118,8 @@ Agente: "Escreva testes de caracterização para estas rotas. Primeiro rode cada
 
 Pronto quando: suíte verde contra a app recebida; `git diff <commit-base> v1-coupled -- app/` vazio.
 
+Status: concluída em 2026-10-13, na branch `implementacao_desafio` (a `main` fica intocada até a versão final). São 19 testes em `tests/characterization/test_helpdesk.py`, com golden em `golden/`, verdes em ~30 s. Teste de mutação: F2+F4 em `mini` derrubam exatamente 2 testes. Tag `v1-coupled` criada e publicada.
+
 <details><summary>P4. Qual a diferença entre teste de caracterização e teste de especificação?</summary>
 
 Especificação diz o que o sistema deveria fazer; caracterização registra o que ele faz hoje, inclusive comportamentos estranhos. Na refatoração você quer o segundo: qualquer diferença indica mudança de comportamento, não de estrutura.
