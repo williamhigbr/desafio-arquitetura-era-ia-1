@@ -1,0 +1,23 @@
+## D3b — anthropic inteiro em timeout (segura 300 s sem bytes)
+$ curl -s -X POST http://localhost:8090/admin/failures -H 'Content-Type: application/json' -d '{"provider": "anthropic", "mode": "timeout"}'
+{"providers":{"openai":"normal","anthropic":"timeout"},"models":{},"effective_by_model":{"gpt-fake-large":"normal","gpt-fake-mini":"normal","claude-fake-large":"timeout","claude-fake-mini":"timeout"}}
+### /tickets/reply-suggestion
+HTTP 504  ttfb=30.004934s  total=30.005536s
+corpo: <html>
+<head><title>504 Gateway Time-out</title></head>
+<body>
+<center><h1>504 Gateway Time-out</h1></center>
+<hr><center>nginx/1.27.5</center>
+</body>
+</html>
+### /tickets/classification durante o travamento (openai normal)
+HTTP 200  ttfb=1.115634s  total=1.116082s
+corpo: {"ticket_id":"TK-00042","category":"delivery","priority":"high"}
+2 chamada(s) em /admin/calls (mais recente primeiro)
+  22:09:21 openai    gpt-fake-large    classify stream=False status=200 in=19 out=11 ms=1079
+  22:08:51 anthropic claude-fake-large suggest  stream=False status=504 in=19 out=None ms=None
+## +5,5 min: o SDK recebe o 504 do provider após 300 s e repete (retry padrão)
+3 chamada(s) em /admin/calls (mais recente primeiro)
+  22:13:51 anthropic claude-fake-large suggest  stream=False status=504 in=19 out=None ms=None
+  22:09:21 openai    gpt-fake-large    classify stream=False status=200 in=19 out=11 ms=1079
+  22:08:51 anthropic claude-fake-large suggest  stream=False status=504 in=19 out=None ms=300004

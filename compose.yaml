@@ -17,7 +17,10 @@ services:
 
   app:
     build: ./app
-    env_file: .env
+    # A app recebe só o endereço e a chave do gateway: nenhuma chave de provider no ambiente.
+    environment:
+      GATEWAY_URL: http://gateway:4000
+      GATEWAY_API_KEY: ${GATEWAY_APP_KEY}
     volumes:
       - ./data:/data:ro
     healthcheck:
@@ -26,5 +29,47 @@ services:
       timeout: 3s
       retries: 20
     depends_on:
+      gateway:
+        condition: service_healthy
+
+  # AI Gateway: único lugar com as chaves dos providers e os modelos físicos (gateway/config.yaml).
+  gateway:
+    image: ghcr.io/berriai/litellm:v1.102.1
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://litellm:${GATEWAY_DB_PASSWORD}@db:5432/litellm
+    entrypoint: ["/bin/bash", "/etc/gateway/entrypoint.sh"]
+    volumes:
+      - ./gateway:/etc/gateway:ro
+    ports:
+      # Roteiro de governança chama o gateway direto. Porta do host configurável (padrão 4000)
+      # caso a 4000 já esteja em uso: GATEWAY_HOST_PORT no .env.
+      - "${GATEWAY_HOST_PORT:-4000}:4000"
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /tmp/gateway-ready && /app/.venv/bin/python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:4000/health/liveliness')\""]
+      interval: 3s
+      timeout: 3s
+      retries: 60
+    depends_on:
+      db:
+        condition: service_healthy
       provider-fake:
         condition: service_healthy
+
+  # Banco do gateway: exigido pelo LiteLLM para chaves virtuais, gasto por chave e limites.
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: litellm
+      POSTGRES_PASSWORD: ${GATEWAY_DB_PASSWORD}
+      POSTGRES_DB: litellm
+    volumes:
+      - gateway-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U litellm -d litellm"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  gateway-db:

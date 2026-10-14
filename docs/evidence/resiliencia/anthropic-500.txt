@@ -1,0 +1,14 @@
+## anthropic-500: anthropic inteiro em error_500 (primário de F2/F3)
+modos: [{"provider": "anthropic", "mode": "error_500"}]
+### F2 /tickets/reply-suggestion
+  HTTP 200 em 20.44 s pela borda: stream com 613 trechos (2451 caracteres), fim: event: end
+  tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:200
+### F3 /reports/topics
+  HTTP 200 em 12.16 s pela borda: 202 → 303 → total_tickets=137, 15 temas
+  tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:200
+### F1 /tickets/classification
+  HTTP 200 em 1.18 s pela borda: {"category": "product_defect", "priority": "low"}
+  tentativas por destino: {'gpt-fake-large': 1}
+  sequência em /admin/calls: gpt-fake-large:200

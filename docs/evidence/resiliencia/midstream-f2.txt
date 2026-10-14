@@ -1,0 +1,6 @@
+## midstream-f2: anthropic em midstream_error (primário da F2)
+modos: [{"provider": "anthropic", "mode": "midstream_error"}]
+### F2 /tickets/reply-suggestion
+  HTTP 200 em 5.18 s pela borda: stream com 153 trechos (612 caracteres), fim: event: error
+  tentativas por destino: {'claude-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:500

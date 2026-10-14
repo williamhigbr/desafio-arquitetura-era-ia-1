@@ -1,0 +1,1352 @@
+[
+  {
+    "task": "classify",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 13,
+      "total_tokens": 55
+    },
+    "seconds": 1.16
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 13,
+      "total_tokens": 55
+    },
+    "seconds": 0.42
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 13
+    },
+    "seconds": 1.16
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 13
+    },
+    "seconds": 0.42
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"exchange_return\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 14,
+      "total_tokens": 62
+    },
+    "seconds": 1.18
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"exchange_return\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 14,
+      "total_tokens": 62
+    },
+    "seconds": 0.43
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"exchange_return\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 14
+    },
+    "seconds": 1.18
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"exchange_return\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 14
+    },
+    "seconds": 0.42
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"low\"}",
+    "usage": {
+      "prompt_tokens": 47,
+      "completion_tokens": 13,
+      "total_tokens": 60
+    },
+    "seconds": 1.16
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"low\"}",
+    "usage": {
+      "prompt_tokens": 47,
+      "completion_tokens": 13,
+      "total_tokens": 60
+    },
+    "seconds": 0.42
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"low\"}",
+    "usage": {
+      "input_tokens": 47,
+      "output_tokens": 13
+    },
+    "seconds": 1.16
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"low\"}",
+    "usage": {
+      "input_tokens": 47,
+      "output_tokens": 13
+    },
+    "seconds": 0.42
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"other\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 11,
+      "total_tokens": 62
+    },
+    "seconds": 1.11
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"other\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 11,
+      "total_tokens": 62
+    },
+    "seconds": 0.41
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"other\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 11
+    },
+    "seconds": 1.11
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"other\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 11
+    },
+    "seconds": 0.41
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 12,
+      "total_tokens": 58
+    },
+    "seconds": 1.11
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 12,
+      "total_tokens": 58
+    },
+    "seconds": 0.39
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 12
+    },
+    "seconds": 1.11
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 12
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 12,
+      "total_tokens": 60
+    },
+    "seconds": 1.1
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 12,
+      "total_tokens": 60
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 12
+    },
+    "seconds": 1.1
+  },
+  {
+    "task": "classify",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 12
+    },
+    "seconds": 0.39
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"high\"}",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 11,
+      "total_tokens": 30
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"high\"}",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 11,
+      "total_tokens": 30
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"delivery\", \"priority\": \"high\"}",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 11
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"delivery\", \"priority\": \"high\"}",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 13,
+      "total_tokens": 33
+    },
+    "seconds": 1.13
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 13,
+      "total_tokens": 33
+    },
+    "seconds": 0.4
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 13
+    },
+    "seconds": 1.13
+  },
+  {
+    "task": "classify",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"category\": \"product_defect\", \"priority\": \"medium\"}",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 13
+    },
+    "seconds": 0.39
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 613,
+      "total_tokens": 655
+    },
+    "seconds": 16.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 275,
+      "total_tokens": 317
+    },
+    "seconds": 2.14
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 613
+    },
+    "seconds": 16.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 275
+    },
+    "seconds": 2.14
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Claro, vamos cuidar da sua troca ou devolução.\n\nVou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nO produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nAssim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nVocê pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nA solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 608,
+      "total_tokens": 656
+    },
+    "seconds": 16.01
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Claro, vamos cuidar da sua troca ou devolução.\n\nVou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nO produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nAssim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nVocê pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nA solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 271,
+      "total_tokens": 319
+    },
+    "seconds": 2.11
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Claro, vamos cuidar da sua troca ou devolução.\n\nVou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nO produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nAssim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nVocê pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nA solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 608
+    },
+    "seconds": 16.01
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Claro, vamos cuidar da sua troca ou devolução.\n\nVou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nO produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nAssim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nVocê pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nA solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nReforçando o ponto 2: o produto deve estar sem sinais de uso e, se possível, na embalagem original.\n\nReforçando o ponto 3: assim que o item chegar ao nosso centro, a troca ou o reembolso é processado.\n\nReforçando o ponto 4: você pode acompanhar cada etapa pela área Meus Pedidos no site.\n\nReforçando o ponto 5: a solicitação pode ser feita em até sete dias corridos após o recebimento.\n\nReforçando o ponto 1: vou gerar uma etiqueta de postagem gratuita para você enviar o produto.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 271
+    },
+    "seconds": 2.11
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 613,
+      "total_tokens": 659
+    },
+    "seconds": 16.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 2: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 3: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 4: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 5: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 274,
+      "total_tokens": 320
+    },
+    "seconds": 2.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 613
+    },
+    "seconds": 16.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 2: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 3: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 4: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 5: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 274
+    },
+    "seconds": 2.13
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Obrigado por entrar em contato com a nossa loja.\n\nRegistrei a sua solicitação e ela já está com a equipe responsável.\n\nVocê recebe um retorno por e-mail em até dois dias úteis.\n\nSe precisar complementar alguma informação, basta responder este atendimento.\n\nNossa central também atende pelo chat, de segunda a sábado.\n\nAgradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 615,
+      "total_tokens": 666
+    },
+    "seconds": 16.18
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Obrigado por entrar em contato com a nossa loja.\n\nRegistrei a sua solicitação e ela já está com a equipe responsável.\n\nVocê recebe um retorno por e-mail em até dois dias úteis.\n\nSe precisar complementar alguma informação, basta responder este atendimento.\n\nNossa central também atende pelo chat, de segunda a sábado.\n\nAgradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 265,
+      "total_tokens": 316
+    },
+    "seconds": 2.08
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Obrigado por entrar em contato com a nossa loja.\n\nRegistrei a sua solicitação e ela já está com a equipe responsável.\n\nVocê recebe um retorno por e-mail em até dois dias úteis.\n\nSe precisar complementar alguma informação, basta responder este atendimento.\n\nNossa central também atende pelo chat, de segunda a sábado.\n\nAgradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 615
+    },
+    "seconds": 16.19
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Obrigado por entrar em contato com a nossa loja.\n\nRegistrei a sua solicitação e ela já está com a equipe responsável.\n\nVocê recebe um retorno por e-mail em até dois dias úteis.\n\nSe precisar complementar alguma informação, basta responder este atendimento.\n\nNossa central também atende pelo chat, de segunda a sábado.\n\nAgradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nReforçando o ponto 3: se precisar complementar alguma informação, basta responder este atendimento.\n\nReforçando o ponto 4: nossa central também atende pelo chat, de segunda a sábado.\n\nReforçando o ponto 5: agradecemos a paciência e a confiança na nossa loja.\n\nReforçando o ponto 1: registrei a sua solicitação e ela já está com a equipe responsável.\n\nReforçando o ponto 2: você recebe um retorno por e-mail em até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 265
+    },
+    "seconds": 2.08
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 601,
+      "total_tokens": 647
+    },
+    "seconds": 15.83
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 1: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 2: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 3: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 4: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 5: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 267,
+      "total_tokens": 313
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 4: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 5: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 1: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 2: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 3: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 601
+    },
+    "seconds": 15.83
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 1: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 2: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 3: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 4: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 5: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 267
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 602,
+      "total_tokens": 650
+    },
+    "seconds": 15.85
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 1: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 2: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 3: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 4: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 5: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 267,
+      "total_tokens": 315
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 4: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 5: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 1: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 2: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 3: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 602
+    },
+    "seconds": 15.86
+  },
+  {
+    "task": "suggest",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 1: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 2: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 3: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 4: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 5: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 267
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 606,
+      "total_tokens": 625
+    },
+    "seconds": 15.96
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 267,
+      "total_tokens": 286
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 606
+    },
+    "seconds": 15.96
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Sinto muito pelo transtorno com a entrega do seu pedido.\n\nCaso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nSe preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nJá abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nO prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nAssim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nReforçando o ponto 1: caso o pedido seja considerado extraviado, fazemos o reenvio sem nenhum custo adicional.\n\nReforçando o ponto 2: se preferir, também é possível solicitar o cancelamento com reembolso integral.\n\nReforçando o ponto 3: já abri uma solicitação de verificação junto à transportadora responsável pelo envio.\n\nReforçando o ponto 4: o prazo de retorno da transportadora costuma ser de até dois dias úteis.\n\nReforçando o ponto 5: assim que tivermos a posição atualizada, você recebe um aviso por e-mail.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 267
+    },
+    "seconds": 2.09
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 613,
+      "total_tokens": 633
+    },
+    "seconds": 16.14
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 2: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 3: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 4: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 5: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 274,
+      "total_tokens": 294
+    },
+    "seconds": 2.14
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 1: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 2: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 3: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 4: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 5: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 613
+    },
+    "seconds": 16.14
+  },
+  {
+    "task": "suggest",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "Olá! Lamento muito que o produto tenha apresentado problema.\n\nEnquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nPara agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nCom as imagens, a análise técnica é concluída em até três dias úteis.\n\nConfirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nA coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nReforçando o ponto 2: para agilizar, peço que envie uma foto ou um vídeo curto mostrando o problema.\n\nReforçando o ponto 3: com as imagens, a análise técnica é concluída em até três dias úteis.\n\nReforçando o ponto 4: confirmado o defeito, você escolhe entre a troca por um novo ou o reembolso.\n\nReforçando o ponto 5: a coleta do produto é agendada por nossa conta, sem custo para você.\n\nReforçando o ponto 1: enquanto isso, evite novas tentativas de uso para não agravar o problema.\n\nFico à disposição para qualquer outra dúvida. Um abraço, equipe de atendimento.",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 274
+    },
+    "seconds": 2.13
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#605065\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 11,
+      "total_tokens": 53
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#530720\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 42,
+      "completion_tokens": 11,
+      "total_tokens": 53
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#605065\", \"product\": null}",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 11
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00002",
+    "input": "Tenho aqui a nota fiscal 530720. O produto veio quebrado na caixa, pedido #605065. Sou cliente da loja há bastante tempo. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#530720\", \"product\": null}",
+    "usage": {
+      "input_tokens": 42,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#972600\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 11,
+      "total_tokens": 59
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#197527\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 11,
+      "total_tokens": 59
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#972600\", \"product\": null}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 11
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00015",
+    "input": "Tenho aqui a nota fiscal 197527. Preciso fazer a troca do pedido 972600 porque o tamanho não serviu. Podem me ajudar, por favor? Aguardo retorno. Fico no aguardo de uma solução.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#197527\", \"product\": null}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#389511\", \"product\": \"tapete de yoga\"}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 14,
+      "total_tokens": 60
+    },
+    "seconds": 1.15
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#927477\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 11,
+      "total_tokens": 57
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#389511\", \"product\": \"tapete de yoga\"}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 14
+    },
+    "seconds": 1.15
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00036",
+    "input": "Tenho aqui a nota fiscal 927477. Recebi o tapete de yoga e o aparelho não liga, pedido nº 389511. É só uma dúvida. Prefiro contato por e-mail. Podem me ajudar, por favor?",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#927477\", \"product\": null}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#732789\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 11,
+      "total_tokens": 62
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#732789\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 11,
+      "total_tokens": 62
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#732789\", \"product\": null}",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 11
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00004",
+    "input": "O cupom de desconto não foi aplicado na minha compra. Referente ao pedido nº 732789. Moro em Campinas, caso ajude. Fico no aguardo de uma solução. Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#732789\", \"product\": null}",
+    "usage": {
+      "input_tokens": 51,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 10,
+      "total_tokens": 56
+    },
+    "seconds": 1.06
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "prompt_tokens": 46,
+      "completion_tokens": 10,
+      "total_tokens": 56
+    },
+    "seconds": 0.37
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 10
+    },
+    "seconds": 1.05
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00001",
+    "input": "O código de rastreio do pedido não mostra nenhuma atualização. Aguardo retorno. Obrigado desde já. Sou cliente da loja há bastante tempo. Moro em Campinas, caso ajude.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "input_tokens": 46,
+      "output_tokens": 10
+    },
+    "seconds": 0.37
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": null, \"product\": \"notebook 14 polegadas\"}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 15,
+      "total_tokens": 63
+    },
+    "seconds": 1.18
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "prompt_tokens": 48,
+      "completion_tokens": 10,
+      "total_tokens": 58
+    },
+    "seconds": 0.37
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": null, \"product\": \"notebook 14 polegadas\"}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 15
+    },
+    "seconds": 1.18
+  },
+  {
+    "task": "extract",
+    "input_id": "TK-00007",
+    "input": "Não consigo acompanhar o rastreio da entrega de o notebook 14 polegadas. Fico no aguardo de uma solução. Podem me ajudar, por favor? Já tentei resolver pelo chat, sem sucesso.",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": null, \"product\": null}",
+    "usage": {
+      "input_tokens": 48,
+      "output_tokens": 10
+    },
+    "seconds": 0.37
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#481516\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 11,
+      "total_tokens": 30
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#481516\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 19,
+      "completion_tokens": 11,
+      "total_tokens": 30
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#481516\", \"product\": null}",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 11
+    },
+    "seconds": 1.08
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-1",
+    "input": "Meu pedido #481516 não chegou e já passou do prazo, urgente",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#481516\", \"product\": null}",
+    "usage": {
+      "input_tokens": 19,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"order_number\": \"#654321\", \"product\": \"fone de ouvido bluetooth\"}",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 17,
+      "total_tokens": 37
+    },
+    "seconds": 1.23
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"order_number\": \"#123456\", \"product\": null}",
+    "usage": {
+      "prompt_tokens": 20,
+      "completion_tokens": 11,
+      "total_tokens": 31
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"order_number\": \"#654321\", \"product\": \"fone de ouvido bluetooth\"}",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 17
+    },
+    "seconds": 1.23
+  },
+  {
+    "task": "extract",
+    "input_id": "AD-HOC-2",
+    "input": "NF 123456, pedido #654321, fone de ouvido bluetooth com defeito",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"order_number\": \"#123456\", \"product\": null}",
+    "usage": {
+      "input_tokens": 20,
+      "output_tokens": 11
+    },
+    "seconds": 0.38
+  },
+  {
+    "task": "topics",
+    "input_id": "first-150-tickets",
+    "input": "<150 primeiros tickets>",
+    "provider": "openai",
+    "model": "gpt-fake-large",
+    "output": "{\"topics\": [{\"topic\": \"Problema no rastreio\", \"count\": 23, \"examples\": [\"TK-00001\", \"TK-00007\", \"TK-00008\"]}, {\"topic\": \"Pedido extraviado\", \"count\": 17, \"examples\": [\"TK-00005\", \"TK-00006\", \"TK-00009\"]}, {\"topic\": \"Troca por tamanho\", \"count\": 11, \"examples\": [\"TK-00015\", \"TK-00039\", \"TK-00045\"]}, {\"topic\": \"Arrependimento de compra\", \"count\": 10, \"examples\": [\"TK-00022\", \"TK-00034\", \"TK-00044\"]}, {\"topic\": \"Outros assuntos\", \"count\": 10, \"examples\": [\"TK-00003\", \"TK-00011\", \"TK-00017\"]}, {\"topic\": \"Problema com boleto\", \"count\": 10, \"examples\": [\"TK-00020\", \"TK-00027\", \"TK-00029\"]}, {\"topic\": \"Produto não liga\", \"count\": 10, \"examples\": [\"TK-00018\", \"TK-00030\", \"TK-00036\"]}, {\"topic\": \"Defeito de fabricação\", \"count\": 9, \"examples\": [\"TK-00035\", \"TK-00041\", \"TK-00071\"]}, {\"topic\": \"Estorno pendente\", \"count\": 9, \"examples\": [\"TK-00024\", \"TK-00033\", \"TK-00046\"]}, {\"topic\": \"Pix não reconhecido\", \"count\": 9, \"examples\": [\"TK-00021\", \"TK-00023\", \"TK-00050\"]}, {\"topic\": \"Atraso na entrega\", \"count\": 8, \"examples\": [\"TK-00010\", \"TK-00025\", \"TK-00028\"]}, {\"topic\": \"Cobrança duplicada\", \"count\": 7, \"examples\": [\"TK-00058\", \"TK-00099\", \"TK-00102\"]}, {\"topic\": \"Acesso à conta\", \"count\": 6, \"examples\": [\"TK-00012\", \"TK-00014\", \"TK-00072\"]}, {\"topic\": \"Produto danificado\", \"count\": 6, \"examples\": [\"TK-00002\", \"TK-00040\", \"TK-00048\"]}, {\"topic\": \"Cupom de desconto\", \"count\": 5, \"examples\": [\"TK-00004\", \"TK-00107\", \"TK-00108\"]}]}",
+    "usage": {
+      "prompt_tokens": 6711,
+      "completion_tokens": 361,
+      "total_tokens": 7072
+    },
+    "seconds": 9.83
+  },
+  {
+    "task": "topics",
+    "input_id": "first-150-tickets",
+    "input": "<150 primeiros tickets>",
+    "provider": "openai",
+    "model": "gpt-fake-mini",
+    "output": "{\"topics\": [{\"topic\": \"Problema no rastreio\", \"count\": 23, \"examples\": [\"TK-00001\", \"TK-00007\", \"TK-00008\"]}, {\"topic\": \"Pedido extraviado\", \"count\": 17, \"examples\": [\"TK-00005\", \"TK-00006\", \"TK-00009\"]}, {\"topic\": \"Troca por tamanho\", \"count\": 11, \"examples\": [\"TK-00015\", \"TK-00039\", \"TK-00045\"]}, {\"topic\": \"Arrependimento de compra\", \"count\": 10, \"examples\": [\"TK-00022\", \"TK-00034\", \"TK-00044\"]}, {\"topic\": \"Outros assuntos\", \"count\": 10, \"examples\": [\"TK-00003\", \"TK-00011\", \"TK-00017\"]}, {\"topic\": \"Problema com boleto\", \"count\": 10, \"examples\": [\"TK-00020\", \"TK-00027\", \"TK-00029\"]}, {\"topic\": \"Produto não liga\", \"count\": 10, \"examples\": [\"TK-00018\", \"TK-00030\", \"TK-00036\"]}, {\"topic\": \"Defeito de fabricação\", \"count\": 9, \"examples\": [\"TK-00035\", \"TK-00041\", \"TK-00071\"]}, {\"topic\": \"Estorno pendente\", \"count\": 9, \"examples\": [\"TK-00024\", \"TK-00033\", \"TK-00046\"]}, {\"topic\": \"Pix não reconhecido\", \"count\": 9, \"examples\": [\"TK-00021\", \"TK-00023\", \"TK-00050\"]}, {\"topic\": \"Atraso na entrega\", \"count\": 8, \"examples\": [\"TK-00010\", \"TK-00025\", \"TK-00028\"]}, {\"topic\": \"Cobrança duplicada\", \"count\": 7, \"examples\": [\"TK-00058\", \"TK-00099\", \"TK-00102\"]}, {\"topic\": \"Acesso à conta\", \"count\": 6, \"examples\": [\"TK-00012\", \"TK-00014\", \"TK-00072\"]}, {\"topic\": \"Produto danificado\", \"count\": 6, \"examples\": [\"TK-00002\", \"TK-00040\", \"TK-00048\"]}, {\"topic\": \"Cupom de desconto\", \"count\": 5, \"examples\": [\"TK-00004\", \"TK-00107\", \"TK-00108\"]}]}",
+    "usage": {
+      "prompt_tokens": 6711,
+      "completion_tokens": 361,
+      "total_tokens": 7072
+    },
+    "seconds": 2.71
+  },
+  {
+    "task": "topics",
+    "input_id": "first-150-tickets",
+    "input": "<150 primeiros tickets>",
+    "provider": "anthropic",
+    "model": "claude-fake-large",
+    "output": "{\"topics\": [{\"topic\": \"Problema no rastreio\", \"count\": 23, \"examples\": [\"TK-00001\", \"TK-00007\", \"TK-00008\"]}, {\"topic\": \"Pedido extraviado\", \"count\": 17, \"examples\": [\"TK-00005\", \"TK-00006\", \"TK-00009\"]}, {\"topic\": \"Troca por tamanho\", \"count\": 11, \"examples\": [\"TK-00015\", \"TK-00039\", \"TK-00045\"]}, {\"topic\": \"Arrependimento de compra\", \"count\": 10, \"examples\": [\"TK-00022\", \"TK-00034\", \"TK-00044\"]}, {\"topic\": \"Outros assuntos\", \"count\": 10, \"examples\": [\"TK-00003\", \"TK-00011\", \"TK-00017\"]}, {\"topic\": \"Problema com boleto\", \"count\": 10, \"examples\": [\"TK-00020\", \"TK-00027\", \"TK-00029\"]}, {\"topic\": \"Produto não liga\", \"count\": 10, \"examples\": [\"TK-00018\", \"TK-00030\", \"TK-00036\"]}, {\"topic\": \"Defeito de fabricação\", \"count\": 9, \"examples\": [\"TK-00035\", \"TK-00041\", \"TK-00071\"]}, {\"topic\": \"Estorno pendente\", \"count\": 9, \"examples\": [\"TK-00024\", \"TK-00033\", \"TK-00046\"]}, {\"topic\": \"Pix não reconhecido\", \"count\": 9, \"examples\": [\"TK-00021\", \"TK-00023\", \"TK-00050\"]}, {\"topic\": \"Atraso na entrega\", \"count\": 8, \"examples\": [\"TK-00010\", \"TK-00025\", \"TK-00028\"]}, {\"topic\": \"Cobrança duplicada\", \"count\": 7, \"examples\": [\"TK-00058\", \"TK-00099\", \"TK-00102\"]}, {\"topic\": \"Acesso à conta\", \"count\": 6, \"examples\": [\"TK-00012\", \"TK-00014\", \"TK-00072\"]}, {\"topic\": \"Produto danificado\", \"count\": 6, \"examples\": [\"TK-00002\", \"TK-00040\", \"TK-00048\"]}, {\"topic\": \"Cupom de desconto\", \"count\": 5, \"examples\": [\"TK-00004\", \"TK-00107\", \"TK-00108\"]}]}",
+    "usage": {
+      "input_tokens": 6711,
+      "output_tokens": 361
+    },
+    "seconds": 9.84
+  },
+  {
+    "task": "topics",
+    "input_id": "first-150-tickets",
+    "input": "<150 primeiros tickets>",
+    "provider": "anthropic",
+    "model": "claude-fake-mini",
+    "output": "{\"topics\": [{\"topic\": \"Problema no rastreio\", \"count\": 23, \"examples\": [\"TK-00001\", \"TK-00007\", \"TK-00008\"]}, {\"topic\": \"Pedido extraviado\", \"count\": 17, \"examples\": [\"TK-00005\", \"TK-00006\", \"TK-00009\"]}, {\"topic\": \"Troca por tamanho\", \"count\": 11, \"examples\": [\"TK-00015\", \"TK-00039\", \"TK-00045\"]}, {\"topic\": \"Arrependimento de compra\", \"count\": 10, \"examples\": [\"TK-00022\", \"TK-00034\", \"TK-00044\"]}, {\"topic\": \"Outros assuntos\", \"count\": 10, \"examples\": [\"TK-00003\", \"TK-00011\", \"TK-00017\"]}, {\"topic\": \"Problema com boleto\", \"count\": 10, \"examples\": [\"TK-00020\", \"TK-00027\", \"TK-00029\"]}, {\"topic\": \"Produto não liga\", \"count\": 10, \"examples\": [\"TK-00018\", \"TK-00030\", \"TK-00036\"]}, {\"topic\": \"Defeito de fabricação\", \"count\": 9, \"examples\": [\"TK-00035\", \"TK-00041\", \"TK-00071\"]}, {\"topic\": \"Estorno pendente\", \"count\": 9, \"examples\": [\"TK-00024\", \"TK-00033\", \"TK-00046\"]}, {\"topic\": \"Pix não reconhecido\", \"count\": 9, \"examples\": [\"TK-00021\", \"TK-00023\", \"TK-00050\"]}, {\"topic\": \"Atraso na entrega\", \"count\": 8, \"examples\": [\"TK-00010\", \"TK-00025\", \"TK-00028\"]}, {\"topic\": \"Cobrança duplicada\", \"count\": 7, \"examples\": [\"TK-00058\", \"TK-00099\", \"TK-00102\"]}, {\"topic\": \"Acesso à conta\", \"count\": 6, \"examples\": [\"TK-00012\", \"TK-00014\", \"TK-00072\"]}, {\"topic\": \"Produto danificado\", \"count\": 6, \"examples\": [\"TK-00002\", \"TK-00040\", \"TK-00048\"]}, {\"topic\": \"Cupom de desconto\", \"count\": 5, \"examples\": [\"TK-00004\", \"TK-00107\", \"TK-00108\"]}]}",
+    "usage": {
+      "input_tokens": 6711,
+      "output_tokens": 361
+    },
+    "seconds": 2.71
+  }
+]

@@ -1,0 +1,29 @@
+## D4 — trocar o modelo da F1 para gpt-fake-mini
+$ grep -n CLASSIFICATION_MODEL app/helpdesk/config.py
+10:CLASSIFICATION_MODEL = "gpt-fake-large"
+
+$ git diff --stat -- app/
+ app/helpdesk/config.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+### 1) só reiniciar a app (docker compose restart app)
+HTTP 200  ttfb=1.115985s  total=1.116401s
+corpo: {"ticket_id":"TK-00042","category":"delivery","priority":"high"}
+1 chamada(s) em /admin/calls (mais recente primeiro)
+  22:27:01 openai    gpt-fake-large    classify stream=False status=200 in=19 out=11 ms=1076
+### 2) reconstruir a imagem (docker compose up -d --build --wait app)
+$ ( time docker compose up -d --build --wait app >/dev/null 2>&1 ) 2>&1 | grep real
+real	0m11.274s
+
+HTTP 200  ttfb=0.401482s  total=0.402303s
+corpo: {"ticket_id":"TK-00042","category":"delivery","priority":"high"}
+1 chamada(s) em /admin/calls (mais recente primeiro)
+  22:27:14 openai    gpt-fake-mini     classify stream=False status=200 in=19 out=11 ms=374
+### 3) desfazer: git checkout -- app/ e reconstruir
+$ git status --short -- app/ && echo '(app/ limpo)'
+(app/ limpo)
+
+HTTP 200  ttfb=1.118386s  total=1.118691s
+corpo: {"ticket_id":"TK-00042","category":"delivery","priority":"high"}
+1 chamada(s) em /admin/calls (mais recente primeiro)
+  22:27:26 openai    gpt-fake-large    classify stream=False status=200 in=19 out=11 ms=1082

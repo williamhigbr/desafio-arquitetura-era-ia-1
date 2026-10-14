@@ -1,0 +1,17 @@
+## Piloto F1: prova de que a F1 passa pelo gateway
+$ grep -rnE 'gpt-fake|claude-fake|llm|config' app/helpdesk/classification.py
+(vazio)
+$ grep -rn 'adapters' app/helpdesk --include=*.py
+app/helpdesk/main.py:4:from .adapters.gateway import GatewayClient
+
+## 1) gateway no ar
+{"ticket_id":"TK-00042","category":"delivery","priority":"high"}  F1 HTTP 200 1.095976s
+  /admin/calls: openai gpt-fake-large classify 200
+
+## 2) docker compose stop gateway
+  F1 (gateway): HTTP 500 0.143208s
+  F4 (ainda no SDK): HTTP 200 1.086368s
+  /admin/calls: 1 chamada(s): [('gpt-fake-large', 'extract')]
+
+## 3) docker compose start gateway
+  F1 HTTP 200 1.231313s

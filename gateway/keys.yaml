@@ -1,0 +1,26 @@
+# Chaves virtuais do gateway, criadas/atualizadas automaticamente a cada subida do serviço
+# (gateway/provision_keys.py). O valor de cada chave vem do ambiente do gateway (.env), para
+# que quem a usa (app ou roteiro de governança) a receba por variável, sem passo manual.
+# `models: [helpdesk]` é o grupo de acesso de todas as capacidades (gateway/config.yaml).
+keys:
+  # Chave da app: teto corporativo de gasto com IA do helpdesk (ADR 0001), US$ 100 a cada 30 dias.
+  # Acima disso o gateway recusa (429) e a app responde 503 até o orçamento renovar.
+  - alias: helpdesk-app
+    key: os.environ/GATEWAY_APP_KEY
+    models: [helpdesk]
+    max_budget: 100
+    budget_duration: 30d
+
+  # Governança, chave com orçamento: US$ 0,0002. Uma classificação curta no large custa ~US$ 0,00015
+  # (~18 tokens de entrada × 2,5e-6 + 11 de saída × 1e-5), então a 2ª chamada já ultrapassa o teto
+  # e a 3ª é recusada pelo gateway antes de chegar ao provider.
+  - alias: governance-budget
+    key: os.environ/GATEWAY_BUDGET_KEY
+    models: [helpdesk]
+    max_budget: 0.0002
+
+  # Governança, chave com limite de requisições: 2 por minuto. A 3ª no mesmo minuto é recusada (429).
+  - alias: governance-rpm
+    key: os.environ/GATEWAY_RPM_KEY
+    models: [helpdesk]
+    rpm_limit: 2
