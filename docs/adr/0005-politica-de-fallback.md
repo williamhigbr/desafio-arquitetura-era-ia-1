@@ -55,6 +55,6 @@ O erro do `mini` é silencioso e plausível. Em "nota fiscal 927477 … pedido n
 
 | Cenário | F1 | F2 | F3 | F4 |
 |---|---|---|---|---|
-| primário em `error_500` | `200`; gpt-large 2 → claude-large 1 | `200`; claude-large 2 → gpt-large 1 | `200`; idem | `200`; gpt-large 2 → claude-large 1 |
-| os dois `large` em `error_500` | `200` com gpt-mini (2 → 2 → 1) | `200`, stream com 1.096 caracteres, claude-mini (2 → 2 → 1) | `200`, relatório igual, claude-mini | `503` (2 → 2, nunca o mini) |
+| primário em `error_500` | `200`; gpt-large 2 → claude-large 1 | `200`; claude-large 2 → gpt-large 1 | `202` → `303`; claude-large 2 → gpt-large 1 | `200`; gpt-large 2 → claude-large 1 |
+| os dois `large` em `error_500` | `200` com gpt-mini (2 → 2 → 1) | `200`, stream com 1.096 caracteres, claude-mini (2 → 2 → 1) | `202` → `303`, relatório igual, claude-mini | `503` (2 → 2, nunca o mini) |
 | os dois providers em `error_500` | `503` | `503` | `failed` com motivo em ~6 s | `503` |

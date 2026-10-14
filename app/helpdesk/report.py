@@ -1,4 +1,5 @@
 import json
+import threading
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 
 from fastapi import HTTPException
@@ -41,14 +42,19 @@ def run(job_id: str, period: PeriodInput, selected: list[dict], gateway: LLMGate
 def topics(period: PeriodInput, selected: list[dict], gateway: LLMGateway, on_progress=None) -> TopicsReport:
     batches = [selected[i:i + TICKETS_PER_CALL] for i in range(0, len(selected), TICKETS_PER_CALL)]
     pool = ThreadPoolExecutor(max_workers=PARALLEL_BATCHES)
-    futures = [pool.submit(_batch_topics, batch, gateway) for batch in batches]
+    failed = threading.Event()  # depois da 1ª falha, nenhum lote novo começa (nem os que já estão na fila)
+    futures = [pool.submit(_batch_topics, batch, gateway, failed) for batch in batches]
     processed = 0
     pending = set(futures)
     try:
         while pending:
             done, pending = wait(pending, return_when=FIRST_COMPLETED)
             for future in done:
-                future.result()  # propaga a primeira falha
+                error = future.exception()
+                if isinstance(error, _Cancelled):
+                    continue  # consequência de outra falha, que é a que vale como motivo
+                if error is not None:
+                    raise error
                 processed += len(batches[futures.index(future)])
             if on_progress:
                 on_progress(processed)
@@ -68,6 +74,20 @@ def topics(period: PeriodInput, selected: list[dict], gateway: LLMGateway, on_pr
     return TopicsReport(start=period.start, end=period.end, total_tickets=len(selected), topics=items)
 
 
-def _batch_topics(batch: list[dict], gateway: LLMGateway) -> list[dict]:
+class _Cancelled(Exception):
+    """Lote não executado porque outro lote do mesmo relatório já falhou."""
+
+
+def _batch_topics(batch: list[dict], gateway: LLMGateway, failed: threading.Event) -> list[dict]:
+    if failed.is_set():
+        raise _Cancelled()
+    try:
+        return _ask_topics(batch, gateway)
+    except Exception:
+        failed.set()  # no próprio worker: a thread liberada não pode pegar o próximo lote antes disso
+        raise
+
+
+def _ask_topics(batch: list[dict], gateway: LLMGateway) -> list[dict]:
     content = "\n".join(f"[{t['id']}] {t['text']}" for t in batch)
     return json.loads(gateway.complete(CAPABILITY, f"TASK: topics\n{content}"))["topics"]

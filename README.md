@@ -262,7 +262,7 @@ Contagens observadas em `/admin/calls`, pela borda, com `python3 scripts/resilie
 | Cenário (provider-fake) | Feature | Resultado pela borda | Tentativas por destino |
 |---|---|---|---|
 | normal | F1 / F4 | `200` em 1,2 / 1,2 s | 1 no primário |
-| normal | F2 | stream: 1º trecho em ~0,9 s, 613 trechos em 17,8 s | 1 no primário |
+| normal | F2 | stream: 1º trecho em ~0,9 s, completo em ~17,8 s (606 trechos para o TK-00042, 613 para o TK-00036) | 1 no primário |
 | normal | F3 (1 dia) | `202` → `303` em 10,2 s | 1 no primário |
 | `anthropic` em `error_500` | F2 | stream completo (texto do large) em 20,4 s; 1º trecho em ~3,3 s | claude-large 2 → gpt-large 1 |
 | `anthropic` em `error_500` | F3 (1 dia) | `202` → `303` em 12,2 s, relatório idêntico | claude-large 2 → gpt-large 1 |
@@ -276,7 +276,7 @@ Contagens observadas em `/admin/calls`, pela borda, com `python3 scripts/resilie
 | `gpt-fake-large` em `timeout` | F1 | `200` em 6,2 s (≤ 15 s) | gpt-large 1 (504, cortado em 5 s) → claude-large 1 |
 | `openai` em `error_429` | F1 | `200` em 7,8 s | gpt-large 3 (intervalo ~2,3 s, Retry-After) → claude-large 1 |
 | os dois providers em `error_500` | F1 / F2 | `503` em 6,7 / 7,5 s | large 2 → large 2 → mini 2 |
-| os dois providers em `error_500` | F3 (mês) | `202`, depois `failed` com motivo em 6,1 s | large 2 → large 2 → mini 2 (1º lote) |
+| os dois providers em `error_500` | F3 (mês) | `202`, depois `failed` com motivo em ~6 s | os 4 lotes já em andamento percorrem a cadeia (2 → 2 → 2 cada, 24 chamadas); nenhum lote novo começa depois da falha |
 | os dois providers em `error_500` | F4 | `503` em 4,8 s | gpt-large 2 → claude-large 2 |
 
 No `midstream_error`, o gateway não troca de destino depois que o stream começou, e o cliente recebe o `event: error` do contrato. Repetir a geração no outro provider duplicaria o texto que o atendente já está lendo.
@@ -288,7 +288,7 @@ O que acontece quando não há nenhum modelo `large` disponível (os dois `large
 | Feature | Comportamento | Status | O que o cliente recebe |
 |---|---|---|---|
 | F1 classificação | Responde com `gpt-fake-mini` | `200` | Mesmo contrato e mesma classificação (no `mini` ela é idêntica à do `large`) |
-| F2 sugestão | Stream com `claude-fake-mini` (degradação declarada) | `200` (`text/event-stream`, termina com `event: end`) | Sugestão mais curta (~45% do tamanho), com os mesmos pontos; o atendente revisa antes de enviar |
+| F2 sugestão | Stream com `claude-fake-mini` (degradação declarada neste ADR/README; a resposta não sinaliza o modelo ao atendente, só o gateway e `/admin/calls` mostram) | `200` (`text/event-stream`, termina com `event: end`) | Sugestão mais curta (~45% do tamanho), com os mesmos pontos; o atendente revisa antes de enviar |
 | F3 relatório | Cada lote usa `claude-fake-mini` | `202` → `303` → `200` | Mesmo relatório (no `mini` os temas e as contagens são idênticos) |
 | F4 extração | Falha explícita, sem modelo fraco | `503` + `Retry-After: 30` | `{"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}` |
 
@@ -387,6 +387,8 @@ ask $GATEWAY_BUDGET_KEY; calls      # 429 budget_exceeded, e o contador não mud
 # limite de requisições: 2 por minuto
 calls; ask $GATEWAY_RPM_KEY; ask $GATEWAY_RPM_KEY; ask $GATEWAY_RPM_KEY; calls   # 3ª: 429, e só 2 chamadas a mais
 ```
+
+O roteiro manual pressupõe o gasto da `governance-budget` zerado: o gasto persiste no Postgres, então numa segunda execução a 1ª chamada já é recusada. Para repetir, rode `scripts/governance.sh`, que zera antes. Os scripts `governance.sh`, `swap_model.sh` e `resilience.py` regravam as evidências em `docs/evidence/`; para descartar a nova saída, `git checkout -- docs/evidence`.
 
 Observado:
 

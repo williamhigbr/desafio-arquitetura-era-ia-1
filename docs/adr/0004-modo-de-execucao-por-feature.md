@@ -70,7 +70,7 @@ Síncrono, timeout de 5 s por tentativa, como a F1.
 
 - O contrato de F2 e F3 muda na `main`. `tests/characterization/` continua igual ao das tags (juiz da refatoração), e `tests/contract/` fixa o contrato novo.
 - O assíncrono em processo exige um único processo da app (o uvicorn padrão, 1 worker). O estado se perde num restart, e várias réplicas veriam estados diferentes. Fila, worker separado ou banco passariam a ser necessários se houver múltiplas réplicas, se for preciso sobreviver a restart ou se o volume justificar escalar o processamento separadamente. Hoje nenhum requisito pede isso, e trocar o adapter não toca na feature.
-- Numa falha de lote, os lotes ainda não iniciados são cancelados. Os que já estavam rodando terminam e são descartados, com no máximo 3 chamadas desperdiçadas.
+- Numa falha de lote, nenhum lote novo começa: o próprio worker que falhou sinaliza o cancelamento antes de pegar o próximo. Os até 3 outros lotes já em andamento terminam a cadeia de fallback e são descartados. Com os dois providers fora, isso dá 4 lotes × 6 tentativas = 24 chamadas `topics` (medido), contra 34 × 6 se o relatório seguisse até o fim.
 
 ## Evidência
 
@@ -84,8 +84,8 @@ Saídas observadas (`docs/evidence/resiliencia/`):
 
 - F1: `200` em 1,2 s; com o primário em `timeout`, `200` em 6,2 s.
 - F2:
-  - primeiro trecho em 0,8–0,9 s e 613 trechos em ~17,8 s, com `Content-Type: text/event-stream` e o texto concatenado igual ao golden da v1;
-  - com `anthropic` em `midstream_error`, 153 trechos e depois `event: error` com `{"ticket_id": "TK-00042", "message": "A geração foi interrompida"}`;
+  - primeiro trecho em 0,8–0,9 s e texto completo em ~17,8 s (606 trechos para o TK-00042), com `Content-Type: text/event-stream` e o texto concatenado igual ao golden da v1;
+  - com `anthropic` em `midstream_error`, 153 trechos e depois `event: error` com `{"ticket_id": "<id do ticket>", "message": "A geração foi interrompida"}`;
   - com o primário em `timeout`, o primeiro trecho chega em ~5 s, pelo fallback.
 - F3:
   - o mês é aceito em 0,03 s (`202`), o progresso avança de 600 em 600 e termina com `303` em ~88 s, com `total_tickets: 5000` e 34 chamadas `topics` em `/admin/calls`;

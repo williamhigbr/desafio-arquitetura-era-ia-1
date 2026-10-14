@@ -40,7 +40,7 @@ jobs:
           ! docker compose exec -T app env | grep -E "FAKE_OPENAI_KEY|FAKE_ANTHROPIC_KEY"
           ! docker compose config app | grep -E "env_file|FAKE_"
           git diff --exit-code v1-coupled v2-decoupled -- tests/characterization/
-          git diff --exit-code "$(git rev-list --max-parents=0 HEAD)" -- provider-fake edge data
+          git diff --exit-code a1aedd7 -- provider-fake edge data
 
       - name: Métrica (testes do script e reprodução da v1-coupled)
         run: |
@@ -60,6 +60,34 @@ jobs:
           scripts/swap_model.sh
           grep -q "gpt-fake-mini classify 200" docs/evidence/troca-de-modelo/f1-large-para-mini.txt
 
+      - name: Logs em caso de falha
+        if: failure()
+        run: docker compose ps -a && docker compose logs --tail 80
+
+  # A suíte de caracterização é o juiz da refatoração: precisa passar, sem alteração, nas duas tags.
+  characterization-tags:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        tag: [v1-coupled, v2-decoupled]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.tag }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Subida da tag
+        run: |
+          cp .env.example .env
+          docker compose up -d --build --wait
+          curl -sf localhost:8000/health
+      - name: Suíte de caracterização da tag
+        run: |
+          pip install -r tests/requirements.txt
+          pytest tests/characterization -q
       - name: Logs em caso de falha
         if: failure()
         run: docker compose ps -a && docker compose logs --tail 80
