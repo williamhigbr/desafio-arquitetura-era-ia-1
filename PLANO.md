@@ -341,6 +341,19 @@ Pergunte quem precisa participar e quanto tempo a decisão deve durar. Corporati
 
 ---
 
+Status (2026-10-13, branch `implementacao_desafio` @ `a2b38dd`):
+- CI no GitHub Actions (`.github/workflows/verify.yml`), Docker real em ubuntu/amd64, sem o override do podman. Todos os jobs verdes:
+  - subida com o comando do README e critérios estáticos;
+  - métrica reproduzindo a `v1-coupled`;
+  - `tests/contract`, governança e troca de modelo;
+  - a suíte de caracterização em cada tag (`v1-coupled` e `v2-decoupled`).
+- Auditor independente (sub-agente, só com o README e os critérios): todos os critérios técnicos OK. Achados corrigidos:
+  - F3: um lote novo começava depois da falha (30 → 24 chamadas);
+  - números e afirmações divergentes no README e nos ADRs 0004/0005;
+  - template de ADR fora de `docs/adr/`;
+  - roteiro manual de governança: dependia do gasto zerado, e os scripts regravam a evidência.
+- Pendente: levar a `implementacao_desafio` para a `main` (decisão do autor: merge ou PR).
+
 ## Armadilhas frequentes
 
 - Fixar na suíte algo que muda na v2 (ex.: contagem de chamadas) → suíte quebra na v2 e você é tentado a mudá-la.
