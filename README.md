@@ -141,9 +141,40 @@ A suíte (`tests/characterization/`) chama só `localhost:8000`, e usa `POST loc
 
 Prova de que a suíte pega mudança de comportamento: trocar temporariamente `EXTRACTION_MODEL` e `SUGGESTION_MODEL` para `mini` e reconstruir a app derruba exatamente 2 testes (F4 com nota fiscal e F2); revertido, os 19 voltam a passar.
 
+Métrica de acoplamento (não precisa do compose no ar):
+
+```
+pip install -r metrics/requirements.txt
+python metrics/coupling.py app/helpdesk --name <nome>        # grava metrics/results/<nome>.csv e .png
+pytest metrics/tests -q                                       # testes do próprio script
+
+# medir uma tag com o script atual:
+git worktree add ../v1 v1-coupled
+python metrics/coupling.py ../v1/app/helpdesk --name v1-coupled
+git worktree remove ../v1
+```
+
 ## Métrica
 
-_A preencher (Etapas 4, 6 e 8)._
+Régua do requisito 3, implementada em `metrics/coupling.py` com `ast`: componente = cada `.py` de `app/helpdesk/` (exceto `__init__.py`); dependência = import relativo ou absoluto que resolve para outro componente; A = classes que herdam de `Protocol`/`ABC` ÷ classes; I = Ce/(Ce+Ca); D = |A+I−1|.
+
+### v1-coupled
+
+[`metrics/results/v1-coupled.csv`](metrics/results/v1-coupled.csv) · ![A × I v1-coupled](metrics/results/v1-coupled.png)
+
+| component | ca | ce | i | a | d |
+|---|---|---|---|---|---|
+| classification | 1 | 3 | 0.75 | 0 | 0.25 |
+| config | 6 | 0 | 0 | 0 | 1 |
+| extraction | 1 | 3 | 0.75 | 0 | 0.25 |
+| llm | 4 | 1 | 0.2 | 0 | 0.8 |
+| main | 0 | 5 | 1 | 0 | 0 |
+| report | 1 | 4 | 0.8 | 0 | 0.2 |
+| schemas | 5 | 0 | 0 | 0 | 1 |
+| suggestion | 1 | 3 | 0.75 | 0 | 0.25 |
+| tickets | 1 | 1 | 0.5 | 0 | 0.5 |
+
+Não há nenhuma abstração (A = 0 em todos). Três componentes caem na zona de dor (I < 0,5 e A < 0,5): `config` (D = 1), `schemas` (D = 1) e `llm` (D = 0,8). `llm` é o problema real: concentra SDK, provider, formato e credencial, que são as partes voláteis, e as 4 features dependem dele. `schemas` são tipos de valor do contrato HTTP. Leitura completa e exceções: _a preencher (Etapas 6 e 8, ADR da métrica)._
 
 ## Tabela de capacidades
 

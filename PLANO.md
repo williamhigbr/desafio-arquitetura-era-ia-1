@@ -150,6 +150,8 @@ Agente: entregue a régua do requisito 3 literalmente e peça os testes antes do
 
 Pronto quando: o CSV gerado bate com a tabela de autoverificação.
 
+Status: concluída em 2026-10-13. O script `metrics/coupling.py` tem 8 testes em `metrics/tests/`, que cobrem `from ..ports`, `from . import a, b`, imports absolutos, duplicatas e as 4 grafias de Protocol/ABC. A medição de `v1-coupled` pelo worktree gerou `metrics/results/v1-coupled.csv`, que é idêntico (`diff` vazio) à tabela P6.
+
 <details><summary>P6. Autoverificação: calcule à mão a v1 antes de rodar o script</summary>
 
 | component | ca | ce | i | a | d | Zona de dor? |
