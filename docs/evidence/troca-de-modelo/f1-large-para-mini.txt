@@ -1,0 +1,21 @@
+## Antes
+{"ticket_id":"TK-00042","category":"delivery","priority":"high"}  F1 pela borda: HTTP 200 em 1.351113s
+  /admin/calls: openai gpt-fake-large classify 200
+  app iniciada em: 2026-10-13 20:27:17.068157524 -0500 CDT
+
+## Troca: na entrada 'model_name: ticket-classify', *gpt-large -> *gpt-mini
+$ diff (antes -> depois) gateway/config.yaml
+35c35
+<     litellm_params: {<<: [*gpt-large, *openai], timeout: 5}
+---
+>     litellm_params: {<<: [*gpt-mini, *openai], timeout: 5}
+$ docker compose restart gateway
+real	0m18.256s
+
+## Depois (app não reconstruída nem reiniciada)
+{"ticket_id":"TK-00042","category":"delivery","priority":"high"}  F1 pela borda: HTTP 200 em 0.658224s
+  /admin/calls: openai gpt-fake-mini classify 200
+  app iniciada em: 2026-10-13 20:27:17.068157524 -0500 CDT
+$ docker compose ps app gateway
+app: Up 32 minutes
+gateway: Up 12 seconds

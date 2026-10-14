@@ -1,0 +1,18 @@
+## normal: provider normal
+modos: []
+### F1 /tickets/classification
+  HTTP 200 em 1.16 s pela borda: {"category": "product_defect", "priority": "low"}
+  tentativas por destino: {'gpt-fake-large': 1}
+  sequência em /admin/calls: gpt-fake-large:200
+### F4 /tickets/extraction
+  HTTP 200 em 1.17 s pela borda: {"order_number": "#389511", "product": "tapete de yoga"}
+  tentativas por destino: {'gpt-fake-large': 1}
+  sequência em /admin/calls: gpt-fake-large:200
+### F2 /tickets/reply-suggestion
+  HTTP 200 em 16.16 s pela borda: suggestion com 2451 caracteres
+  tentativas por destino: {'claude-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:200
+### F3 /reports/topics
+  HTTP 200 em 9.85 s pela borda: total_tickets=137, 15 temas
+  tentativas por destino: {'claude-fake-large': 1}
+  sequência em /admin/calls: claude-fake-large:200

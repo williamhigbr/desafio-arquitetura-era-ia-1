@@ -1,0 +1,18 @@
+## all-down: os dois providers em error_500
+modos: [{"provider": "openai", "mode": "error_500"}, {"provider": "anthropic", "mode": "error_500"}]
+### F1 /tickets/classification
+  HTTP 503 em 8.04 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-classify"}
+  tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 2, 'gpt-fake-mini': 2}
+  sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:500 → claude-fake-large:500 → gpt-fake-mini:500 → gpt-fake-mini:500
+### F4 /tickets/extraction
+  HTTP 503 em 4.81 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}
+  tentativas por destino: {'gpt-fake-large': 2, 'claude-fake-large': 2}
+  sequência em /admin/calls: gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-large:500 → claude-fake-large:500
+### F2 /tickets/reply-suggestion
+  HTTP 503 em 6.88 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-reply"}
+  tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 2, 'claude-fake-mini': 2}
+  sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-mini:500 → claude-fake-mini:500
+### F3 /reports/topics
+  HTTP 503 em 7.70 s pela borda: {"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "topics-report"}
+  tentativas por destino: {'claude-fake-large': 2, 'gpt-fake-large': 2, 'claude-fake-mini': 2}
+  sequência em /admin/calls: claude-fake-large:500 → claude-fake-large:500 → gpt-fake-large:500 → gpt-fake-large:500 → claude-fake-mini:500 → claude-fake-mini:500

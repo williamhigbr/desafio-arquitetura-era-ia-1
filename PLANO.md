@@ -247,6 +247,14 @@ Tarefas
 
 Agente: ótimo para descobrir as chaves certas da config do LiteLLM na versão fixada; exija que cada afirmação venha com o trecho da documentação e um teste rodado contra o `/admin/calls`.
 
+Status: concluída em 2026-10-13.
+- Configuração: preços, `retry_policy` (5xx: 1, 429: 2, timeout: 0), cadeia `<cap>` → `<cap>-alt` → `<cap>-mini` (a F4 não tem mini), timeouts de 5/20 s e `disable_cooldowns`.
+- Erro do gateway: a app responde `503` explícito, com `Retry-After`.
+- Resiliência: `scripts/resilience.py` cobre 7 cenários pela borda e conta as tentativas por destino. A F1 com primário em timeout responde em 6,2 s.
+- Governança: `scripts/governance.sh` recusa por orçamento e por rpm sem chamar o provider.
+- Troca de modelo: `scripts/swap_model.sh` troca a F1 para mini só com `restart gateway`, e a app não reinicia.
+- Pendência para a Etapa 8: a F2 síncrona com primário em timeout dá `503` em 25 s, resolvido com streaming (`stream_timeout: 4`).
+
 <details><summary>P12. Como dimensionar o timeout da F1 para caber em 15 s com o primário em <code>timeout</code>?</summary>
 
 F1 normal leva ~1,1 s (0,8 s até o primeiro token + saída curta). Um timeout de ~4–5 s por tentativa dá folga. Retry em timeout gasta o orçamento inteiro de novo, então para timeout prefira não repetir no mesmo destino e ir direto ao fallback: 5 s (primário) + ~1,1 s (fallback) ≈ 6 s < 15 s. Faça a conta para o pior caso declarado e registre no ADR.

@@ -1,0 +1,6 @@
+## timeout-f1: primário da F1 (gpt-fake-large) em timeout
+modos: [{"provider": "openai", "model": "gpt-fake-large", "mode": "timeout"}]
+### F1 /tickets/classification
+  HTTP 200 em 6.17 s pela borda: {"category": "product_defect", "priority": "low"}
+  tentativas por destino: {'gpt-fake-large': 1, 'claude-fake-large': 1}
+  sequência em /admin/calls: gpt-fake-large:504 → claude-fake-large:200

@@ -1,42 +1,100 @@
 # Configuração do AI Gateway (LiteLLM v1.102.1).
 #
-# A app só conhece os nomes lógicos (model_name) abaixo; o modelo físico, o provider, a URL e a
-# credencial de cada um vivem só aqui. Trocar o modelo de uma capacidade = editar este arquivo e
-# `docker compose restart gateway` (a app não é reconstruída nem reiniciada).
+# A app só conhece os 4 nomes lógicos primários (ticket-classify, ticket-extract, ticket-reply,
+# topics-report). O modelo físico, o provider, a URL, a credencial, o preço, o timeout e a cadeia de
+# fallback de cada capacidade vivem só aqui. Trocar o modelo de uma capacidade = editar o `model:`
+# da entrada correspondente e `docker compose restart gateway` (a app não é reconstruída nem reiniciada).
 #
-# v2-decoupled: cada capacidade aponta para o mesmo modelo `large` que a feature usava na v1, para
-# que a suíte de caracterização continue passando sem alteração. Resiliência, fallback, preços e
-# governança entram na Etapa 7.
+# Cadeia por capacidade (router_settings.fallbacks):
+#   <capacidade>        primário: large do provider "titular"
+#   <capacidade>-alt    fallback técnico: large equivalente do outro provider (mesma saída)
+#   <capacidade>-mini   fallback com modelo fraco: só F1, F2 e F3 (ADR de fallback; F4 não tem)
+# Cada grupo tem um único deployment: assim o retry respeita backoff/Retry-After em vez de pular
+# para outro deployment do mesmo grupo, e o número de tentativas por destino é determinístico.
+
+x-openai: &openai
+  api_base: http://provider-fake:8090/openai/v1
+  api_key: os.environ/FAKE_OPENAI_KEY
+x-anthropic: &anthropic
+  api_base: http://provider-fake:8090/anthropic
+  api_key: os.environ/FAKE_ANTHROPIC_KEY
+  max_tokens: 2000
+# Preços do README do provider-fake (US$ por token). Sem eles o custo é zero e budget nunca estoura.
+x-gpt-large: &gpt-large   {model: openai/gpt-fake-large, input_cost_per_token: 2.5e-6, output_cost_per_token: 1.0e-5}
+x-gpt-mini: &gpt-mini     {model: openai/gpt-fake-mini, input_cost_per_token: 1.5e-7, output_cost_per_token: 6.0e-7}
+x-claude-large: &claude-large {model: anthropic/claude-fake-large, input_cost_per_token: 3.0e-6, output_cost_per_token: 1.5e-5}
+x-claude-mini: &claude-mini   {model: anthropic/claude-fake-mini, input_cost_per_token: 8.0e-7, output_cost_per_token: 4.0e-6}
+# Todas as capacidades pertencem ao grupo de acesso "helpdesk"; as chaves dão acesso ao grupo
+# (o LiteLLM só segue um fallback se a chave puder chamar o grupo de destino).
+x-helpdesk: &helpdesk {access_groups: [helpdesk]}
 
 model_list:
-  - model_name: ticket-classify          # F1 classificação
-    litellm_params:
-      model: openai/gpt-fake-large
-      api_base: http://provider-fake:8090/openai/v1
-      api_key: os.environ/FAKE_OPENAI_KEY
+  # F1 classificação: saída curta (~1,1 s no large). Timeout 5 s por tentativa (P12): primário em
+  # timeout + fallback ≈ 6 s, abaixo dos 15 s exigidos e dos 30 s da borda.
+  - model_name: ticket-classify
+    litellm_params: {<<: [*gpt-large, *openai], timeout: 5}
+    model_info: *helpdesk
+  - model_name: ticket-classify-alt
+    litellm_params: {<<: [*claude-large, *anthropic], timeout: 5}
+    model_info: *helpdesk
+  - model_name: ticket-classify-mini
+    litellm_params: {<<: [*gpt-mini, *openai], timeout: 5}
+    model_info: *helpdesk
 
-  - model_name: ticket-extract           # F4 extração
-    litellm_params:
-      model: openai/gpt-fake-large
-      api_base: http://provider-fake:8090/openai/v1
-      api_key: os.environ/FAKE_OPENAI_KEY
+  # F4 extração: mesma latência da F1. Sem modelo fraco: o mini devolve a nota fiscal no lugar do
+  # pedido (docs/evidence/etapa1-reconhecimento.md), erro silencioso numa automação sem revisão.
+  - model_name: ticket-extract
+    litellm_params: {<<: [*gpt-large, *openai], timeout: 5}
+    model_info: *helpdesk
+  - model_name: ticket-extract-alt
+    litellm_params: {<<: [*claude-large, *anthropic], timeout: 5}
+    model_info: *helpdesk
 
-  - model_name: ticket-reply             # F2 sugestão de resposta
-    litellm_params:
-      model: anthropic/claude-fake-large
-      api_base: http://provider-fake:8090/anthropic
-      api_key: os.environ/FAKE_ANTHROPIC_KEY
-      max_tokens: 2000
+  # F2 sugestão: ~16 s gerando no large. `timeout` vale para a chamada sem streaming (v2, até a
+  # Etapa 8); `stream_timeout` limita a espera por bytes no streaming (Etapa 8).
+  - model_name: ticket-reply
+    litellm_params: {<<: [*claude-large, *anthropic], timeout: 20, stream_timeout: 4}
+    model_info: *helpdesk
+  - model_name: ticket-reply-alt
+    litellm_params: {<<: [*gpt-large, *openai], timeout: 20, stream_timeout: 4}
+    model_info: *helpdesk
+  - model_name: ticket-reply-mini
+    litellm_params: {<<: [*claude-mini, *anthropic], timeout: 20, stream_timeout: 4}
+    model_info: *helpdesk
 
-  - model_name: topics-report            # F3 relatório de temas
-    litellm_params:
-      model: anthropic/claude-fake-large
-      api_base: http://provider-fake:8090/anthropic
-      api_key: os.environ/FAKE_ANTHROPIC_KEY
-      max_tokens: 2000
+  # F3 relatório: ~9,8 s por lote de 150 tickets no large, 2,7 s no mini.
+  - model_name: topics-report
+    litellm_params: {<<: [*claude-large, *anthropic], timeout: 20}
+    model_info: *helpdesk
+  - model_name: topics-report-alt
+    litellm_params: {<<: [*gpt-large, *openai], timeout: 20}
+    model_info: *helpdesk
+  - model_name: topics-report-mini
+    litellm_params: {<<: [*claude-mini, *anthropic], timeout: 20}
+    model_info: *helpdesk
 
 router_settings:
-  num_retries: 0        # v2: sem retry no gateway (comportamento da v1 é decidido na Etapa 7)
+  # Retry por tipo de falha, em cada destino da cadeia (primário, alt, mini):
+  # - 500/503: 1 retry, com backoff exponencial (~0,5 s + jitter); falha transitória costuma passar;
+  # - 429: 2 retries, respeitando o Retry-After do provider (2 s);
+  # - timeout: 0 retry; repetir gastaria o orçamento de latência inteiro de novo, vai direto ao fallback;
+  # - 4xx de requisição (400/401/404): 0; repetir não muda o resultado.
+  retry_policy:
+    InternalServerErrorRetries: 1
+    ServiceUnavailableErrorRetries: 1
+    RateLimitErrorRetries: 2
+    TimeoutErrorRetries: 0
+    BadRequestErrorRetries: 0
+    AuthenticationErrorRetries: 0
+    DefaultRetries: 0
+  fallbacks:
+    - ticket-classify: [ticket-classify-alt, ticket-classify-mini]
+    - ticket-extract: [ticket-extract-alt]
+    - ticket-reply: [ticket-reply-alt, ticket-reply-mini]
+    - topics-report: [topics-report-alt, topics-report-mini]
+  # Sem cooldown: cada requisição percorre a cadeia inteira, e o número de tentativas por destino é
+  # o declarado no README. Com um único deployment por grupo, o cooldown só pularia destinos.
+  disable_cooldowns: true
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY

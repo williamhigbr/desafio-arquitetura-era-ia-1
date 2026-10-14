@@ -1,9 +1,10 @@
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 from . import classification, extraction, report, suggestion
-from .adapters.gateway import GatewayClient
+from .adapters.gateway import GatewayClient, GatewayUnavailable
 from .adapters.tickets_file import JsonlTicketSource
 from .schemas import (Classification, OrderData, PeriodInput, ReplySuggestion, TicketInput,
                       TopicsReport)
@@ -20,6 +21,19 @@ gateway = GatewayClient(base_url=GATEWAY_URL, api_key=GATEWAY_API_KEY, timeout=G
 tickets = JsonlTicketSource(TICKETS_FILE)
 
 app = FastAPI(title="Helpdesk")
+
+
+@app.exception_handler(GatewayUnavailable)
+def gateway_unavailable(request: Request, exc: GatewayUnavailable) -> JSONResponse:
+    """Nenhum destino da capacidade respondeu (primário, fallback técnico e, se houver, modelo fraco).
+
+    Falha explícita: 503, em vez do 500 genérico da v1. Para F4, que não tem modelo fraco por decisão
+    de produto, é a resposta esperada quando os dois modelos large estão fora.
+    """
+    return JSONResponse(status_code=503, headers={"Retry-After": "30"}, content={
+        "detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.",
+        "capability": exc.capability,
+    })
 
 
 @app.get("/health")

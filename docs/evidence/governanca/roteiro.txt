@@ -1,0 +1,23 @@
+## Preparação: reinicia o gateway para zerar o gasto e a janela de rpm das chaves de governança
+$ docker compose restart gateway   (o entrypoint recria/reaplica as chaves; o gasto é zerado com /key/update spend=0)
+
+## 1. Orçamento: chave governance-budget (max_budget US$ 0,0002; 1 classificação ≈ US$ 0,00016)
+  /key/info governance-budget: spend=US$ 0.000000 max_budget=0.0002 rpm_limit=None
+  1ª chamada: HTTP 200 | /admin/calls 0 -> 1 (1 chamada(s) ao provider)
+  2ª chamada: HTTP 200 | /admin/calls 1 -> 2 (1 chamada(s) ao provider)
+  3ª chamada (orçamento estourado): HTTP 429 | /admin/calls 2 -> 2 (0 chamada(s) ao provider)
+    corpo: budget_exceeded | Budget has been exceeded! Key=governance-budget (sk-...0001) Current cost: 0.00029500000000001443, Max budget: 0.0002
+  4ª chamada (orçamento estourado): HTTP 429 | /admin/calls 2 -> 2 (0 chamada(s) ao provider)
+    corpo: budget_exceeded | Budget has been exceeded! Key=governance-budget (sk-...0001) Current cost: 0.00029500000000001443, Max budget: 0.0002
+
+## 2. Limite de requisições: chave governance-rpm (rpm_limit 2)
+  /key/info governance-rpm: spend=US$ 0.000000 max_budget=None rpm_limit=2
+  1ª chamada: HTTP 200 | /admin/calls 2 -> 3 (1 chamada(s) ao provider)
+  2ª chamada: HTTP 200 | /admin/calls 3 -> 4 (1 chamada(s) ao provider)
+  3ª chamada (acima de 2/min): HTTP 429 | /admin/calls 4 -> 4 (0 chamada(s) ao provider)
+    corpo: throttling_error | Rate limit exceeded for api_key: d110e0ecac6af81103622f34f1c8d613221c33111727b4e3a3957dfadb6e3cc4. Limit type: requests. Current limit: 2, Remaining: 0. Limit r
+  4ª chamada (acima de 2/min): HTTP 429 | /admin/calls 4 -> 4 (0 chamada(s) ao provider)
+    corpo: throttling_error | Rate limit exceeded for api_key: d110e0ecac6af81103622f34f1c8d613221c33111727b4e3a3957dfadb6e3cc4. Limit type: requests. Current limit: 2, Remaining: 0. Limit r
+
+## 3. Controle: a chave da app não é afetada
+  chave helpdesk-app: HTTP 200 | /admin/calls 4 -> 5 (1 chamada(s) ao provider)

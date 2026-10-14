@@ -205,18 +205,56 @@ O que saiu de onde, e por quê:
 
 ## Tabela de capacidades
 
-Estado atual (`v2-decoupled`): mapeamento em `gateway/config.yaml`, sem retry nem fallback, que entram na Etapa 7. As 4 features chamam só o gateway, pelo componente `app/helpdesk/adapters/gateway.py`.
+Mapeamento em [`gateway/config.yaml`](gateway/config.yaml). A app conhece só os 4 nomes lógicos e os chama pelo componente `app/helpdesk/adapters/gateway.py`, o único da app que fala com o gateway (SDK `openai`, `max_retries=0`, timeout de 25 s). Retry, timeout e fallback moram no gateway.
 
-| Capacidade lógica | Feature | Modelo primário | Fallback técnico | Modelo fraco | Máx. tentativas por destino |
-|---|---|---|---|---|---|
-| `ticket-classify` | F1 | `openai/gpt-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
-| `ticket-extract` | F4 | `openai/gpt-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
-| `ticket-reply` | F2 | `anthropic/claude-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
-| `topics-report` | F3 | `anthropic/claude-fake-large` | _Etapa 7_ | _Etapa 7_ | 1 (primário) |
+| Capacidade lógica | Feature | Modelo primário | Fallback técnico | Modelo fraco | Timeout por tentativa | Máx. tentativas por destino |
+|---|---|---|---|---|---|---|
+| `ticket-classify` | F1 | `openai/gpt-fake-large` | `anthropic/claude-fake-large` | `openai/gpt-fake-mini` | 5 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
+| `ticket-extract` | F4 | `openai/gpt-fake-large` | `anthropic/claude-fake-large` | nenhum (falha explícita) | 5 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
+| `ticket-reply` | F2 | `anthropic/claude-fake-large` | `openai/gpt-fake-large` | `anthropic/claude-fake-mini` | 20 s (4 s sem bytes no streaming, Etapa 8) | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
+| `topics-report` | F3 (por lote) | `anthropic/claude-fake-large` | `openai/gpt-fake-large` | `anthropic/claude-fake-mini` | 20 s | 2 em 5xx, 3 em 429, 1 em timeout, em cada destino |
+
+Política de retry (`router_settings.retry_policy`, igual para todos os destinos):
+
+- `500`/`503` (`InternalServerErrorRetries`/`ServiceUnavailableErrorRetries: 1`): 1 retry, com backoff exponencial do LiteLLM (0,5 s × 2ⁿ + jitter de até 0,75 s).
+- `429` (`RateLimitErrorRetries: 2`): 2 retries, respeitando o `Retry-After` do provider (2 s + jitter).
+- Timeout (`TimeoutErrorRetries: 0`): nenhum retry, vai direto ao próximo destino. Repetir gastaria o orçamento de latência inteiro de novo.
+- 4xx de requisição e o resto (`DefaultRetries: 0`): nenhum retry.
+- `disable_cooldowns: true`: cada requisição percorre a cadeia inteira, então as contagens acima valem sempre, e não só para a primeira requisição depois de uma falha.
+
+Contagens observadas em `/admin/calls`, pela borda, com `python3 scripts/resilience.py` (saídas em [`docs/evidence/resiliencia/`](docs/evidence/resiliencia/)):
+
+| Cenário (provider-fake) | Feature | Resultado pela borda | Tentativas por destino |
+|---|---|---|---|
+| normal | F1 / F4 / F2 / F3 | `200` em 1,2 / 1,2 / 16,2 / 9,9 s | 1 no primário |
+| `anthropic` em `error_500` | F2 | `200` em 18,2 s, texto do large | claude-large 2 → gpt-large 1 |
+| `anthropic` em `error_500` | F3 (1 dia) | `200` em 12,2 s, relatório idêntico | claude-large 2 → gpt-large 1 |
+| `openai` em `error_500` | F1 / F4 | `200` em 3,4 / 3,3 s, mesma resposta | gpt-large 2 → claude-large 1 |
+| os dois `large` em `error_500` | F1 | `200` em 5,5 s (mini) | gpt-large 2 → claude-large 2 → gpt-mini 1 |
+| os dois `large` em `error_500` | F2 | `200` em 7,9 s, sugestão de 1.096 caracteres (mini) | claude-large 2 → gpt-large 2 → claude-mini 1 |
+| os dois `large` em `error_500` | F3 (1 dia) | `200` em 7,9 s (mini; mesmo relatório) | claude-large 2 → gpt-large 2 → claude-mini 1 |
+| os dois `large` em `error_500` | F4 | `503` em 4,5 s | gpt-large 2 → claude-large 2 |
+| `gpt-fake-large` em `timeout` | F1 | `200` em 6,2 s (≤ 15 s) | gpt-large 1 (504, cortado em 5 s) → claude-large 1 |
+| `openai` em `error_429` | F1 | `200` em 7,8 s | gpt-large 3 (intervalo ~2,3 s, Retry-After) → claude-large 1 |
+| os dois providers em `error_500` | F1 / F2 / F3 | `503` em 8,0 / 6,9 / 7,7 s | large 2 → large 2 → mini 2 |
+| os dois providers em `error_500` | F4 | `503` em 4,8 s | gpt-large 2 → claude-large 2 |
+
+Limitação conhecida até a Etapa 8: a F2 ainda é síncrona. Com o primário da F2 em `timeout`, o gateway espera 20 s e o fallback leva mais ~16 s, o que passa do timeout de 25 s da app. A app responde `503` em 25 s (nunca `504` da borda), mas o fallback termina no gateway depois disso. O streaming da Etapa 8 resolve, porque com `stream_timeout: 4` a troca de destino acontece em 4 s.
 
 ## Tabela de fallback
 
-_A preencher (Etapa 7)._
+O que acontece quando não há nenhum modelo `large` disponível (os dois `large` em `error_500`; cenário `large-500`):
+
+| Feature | Comportamento | Status | O que o cliente recebe |
+|---|---|---|---|
+| F1 classificação | Responde com `gpt-fake-mini` | `200` | Mesmo contrato e mesma classificação (no `mini` ela é idêntica à do `large`) |
+| F2 sugestão | Responde com `claude-fake-mini` (degradação declarada) | `200` | Sugestão mais curta (~45% do tamanho), com os mesmos pontos; o atendente revisa antes de enviar |
+| F3 relatório | Cada lote usa `claude-fake-mini` | `200` | Mesmo relatório (no `mini` os temas e as contagens são idênticos) |
+| F4 extração | Falha explícita, sem modelo fraco | `503` + `Retry-After: 30` | `{"detail": "Serviço de IA indisponível no momento. Tente novamente mais tarde.", "capability": "ticket-extract"}` |
+
+Por que a F4 não tem `mini`: nos testes da Etapa 1, o `mini` devolve o número da nota fiscal no lugar do pedido e perde o produto (5 de 8 entradas), num formato válido que a validação da app não pega. A F4 alimenta uma automação sem revisão humana, então um pedido errado vira uma troca errada. Evidência: [`docs/evidence/etapa1-reconhecimento.md`](docs/evidence/etapa1-reconhecimento.md).
+
+Sem nenhum modelo disponível (os dois providers fora), as quatro features respondem `503` com o mesmo corpo, em menos de 8,1 s.
 
 ## Fluxos
 
@@ -224,11 +262,51 @@ _A preencher (Etapa 8)._
 
 ## Troca de modelo
 
-_A preencher (Etapa 7)._
+Arquivo: [`gateway/config.yaml`](gateway/config.yaml). Altere o `litellm_params` da entrada da capacidade. Por exemplo, para a F1 passar a usar o `mini`, troque a âncora `*gpt-large` por `*gpt-mini` na entrada `model_name: ticket-classify`. Para um modelo sem âncora, escreva `{model: openai/<modelo>, input_cost_per_token: ..., output_cost_per_token: ..., <<: *openai, timeout: 5}`. Depois:
+
+```
+docker compose restart gateway
+```
+
+A app não é reconstruída nem reiniciada, e os modelos vêm só do arquivo (`store_model_in_db: false`). `scripts/swap_model.sh` faz a troca da F1 de `large` para `mini`, confere e desfaz no fim ([`docs/evidence/troca-de-modelo/f1-large-para-mini.txt`](docs/evidence/troca-de-modelo/f1-large-para-mini.txt)):
+
+| Momento | `/admin/calls` | F1 pela borda | App iniciada em |
+|---|---|---|---|
+| Antes | `openai gpt-fake-large classify 200` | `200` em 1,35 s | 20:27:17 |
+| Depois do `restart gateway` (~18 s) | `openai gpt-fake-mini classify 200` | `200` em 0,66 s | 20:27:17 (inalterado; `docker compose ps`: app `Up 32 minutes`, gateway `Up 12 seconds`) |
+
+As chaves virtuais sobrevivem ao restart: o entrypoint do gateway as reaplica (`provision_keys: chave ... atualizada`).
 
 ## Roteiro de governança
 
-_A preencher (Etapa 7)._
+Chaves em [`gateway/keys.yaml`](gateway/keys.yaml), criadas pelo gateway a cada subida: `governance-budget` (`max_budget` US$ 0,0002), `governance-rpm` (`rpm_limit` 2) e a da app. Os preços dos modelos estão em `gateway/config.yaml`; sem eles o custo seria zero e o orçamento nunca estouraria. O roteiro completo é `scripts/governance.sh`, que reinicia o gateway, zera o gasto das duas chaves e conta `/admin/calls` antes e depois de cada chamada ([`docs/evidence/governanca/roteiro.txt`](docs/evidence/governanca/roteiro.txt)). À mão:
+
+```
+set -a; . ./.env; set +a
+calls() { curl -s "localhost:8090/admin/calls?last=5000" | python3 -c 'import json,sys; print(len(json.load(sys.stdin)))'; }
+ask() { curl -s -w "\nHTTP %{http_code}\n" localhost:4000/v1/chat/completions -H "Authorization: Bearer $1" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "ticket-classify", "messages": [{"role": "user", "content": "TASK: classify\nMeu pedido não chegou"}]}'; }
+
+# orçamento: cada classificação custa ~US$ 0,00015; espere uns segundos entre as chamadas (gasto é assíncrono)
+calls; ask $GATEWAY_BUDGET_KEY; sleep 3; ask $GATEWAY_BUDGET_KEY; sleep 3; calls
+ask $GATEWAY_BUDGET_KEY; calls      # 429 budget_exceeded, e o contador não muda
+
+# limite de requisições: 2 por minuto
+calls; ask $GATEWAY_RPM_KEY; ask $GATEWAY_RPM_KEY; ask $GATEWAY_RPM_KEY; calls   # 3ª: 429, e só 2 chamadas a mais
+```
+
+Observado:
+
+| Chave | Chamada | Gateway | `/admin/calls` |
+|---|---|---|---|
+| `governance-budget` | 1ª, 2ª | `200` | 0 → 1 → 2 |
+| `governance-budget` | 3ª, 4ª | `429 budget_exceeded` ("Current cost: 0.000295, Max budget: 0.0002") | 2 → 2 (nenhuma chamada ao provider) |
+| `governance-rpm` | 1ª, 2ª | `200` | 2 → 3 → 4 |
+| `governance-rpm` | 3ª, 4ª | `429 throttling_error` ("Current limit: 2, Remaining: 0") | 4 → 4 (nenhuma chamada ao provider) |
+| `helpdesk-app` | controle | `200` | 4 → 5 |
+
+O orçamento estoura na 2ª chamada (US$ 0,000295 > 0,0002), e a recusa vem na 3ª, porque o gasto é conferido antes da chamada e contabilizado depois dela. Assim, uma chave nunca ultrapassa o teto em mais do que o custo de uma chamada. A janela de rpm é de um minuto; para repetir o roteiro, rode `scripts/governance.sh`, que reinicia o gateway e zera os contadores.
 
 ## Mapa de decisões
 
